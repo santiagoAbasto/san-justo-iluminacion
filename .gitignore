@@ -1,0 +1,63 @@
+# Dependencias
+/vendor/
+/node_modules/
+/composer.phar
+
+# Configuración local y credenciales
+.env
+.env.*
+!.env.example
+/auth.json
+
+# Laravel: cachés, sesiones, logs y archivos generados
+/bootstrap/cache/*.php
+/storage/*.key
+/storage/app/private/
+/storage/app/public/
+/storage/debugbar/
+/storage/framework/cache/
+/storage/framework/sessions/
+/storage/framework/testing/
+/storage/framework/views/
+/storage/logs/*.log
+/storage/pail/
+/public/storage
+
+# Frontend compilado y servidores de desarrollo
+/public/build/
+/public/hot
+/bootstrap/ssr/
+*.tsbuildinfo
+
+# Pruebas y análisis
+/.phpunit.cache/
+/.phpunit.result.cache
+/coverage/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+error_log*
+
+# IDE y sistema operativo
+/.fleet/
+/.idea/
+/.nova/
+/.vscode/
+/.zed/
+.phpactor.json
+.DS_Store
+**/.DS_Store
+Thumbs.db
+
+# Entornos de desarrollo y despliegues locales
+Homestead.json
+Homestead.yaml
+/public_html/
+
+# Archivos accidentales heredados de importaciones/consola
+/as $producto) \{
+/ignados = 0
