@@ -7,9 +7,8 @@
     <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@5.6.1/dist/maplibre-gl.css" />
     <style>
         #mapa {
-            height: 500px;
+            height: 705px;
             width: 100%;
-            filter: grayscale(100%);
         }
 
         @media (max-width: 640px) {
