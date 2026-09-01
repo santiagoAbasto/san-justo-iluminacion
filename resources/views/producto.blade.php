@@ -7,7 +7,7 @@
 
 @push('head')
     <script type="application/ld+json">
-        @json(array_filter([
+        {!! json_encode(array_filter([
             '@context' => 'https://schema.org',
             '@type' => 'Product',
             'name' => $producto->name,
@@ -19,7 +19,7 @@
                 'name' => 'San Justo Iluminación',
             ],
             'url' => url('/productos/' . $producto->code),
-        ]), JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)
+        ]), JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}
     </script>
 @endpush
 
