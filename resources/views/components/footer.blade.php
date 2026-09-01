@@ -1,7 +1,7 @@
 {{-- resources/views/components/footer.blade.php --}}
 <div class="flex h-fit w-full flex-col bg-[#F2EEED]">
     <div
-        class="mx-auto flex h-full w-full max-w-[1224px] flex-col items-center justify-between gap-20 max-sm:gap-10 px-4  lg:flex-row lg:items-start  lg:px-0 py-18">
+        class="mx-auto flex h-full w-full max-w-[1224px] flex-col items-center justify-between gap-12 px-4 py-12 sm:gap-16 sm:px-6 sm:py-16 lg:flex-row lg:items-start lg:gap-20 lg:px-0 lg:py-18">
         {{-- Logo y redes sociales --}}
         <div class="flex h-full flex-col items-center gap-6">
             <a href="/">
@@ -43,9 +43,9 @@
                 <a href="{{ route('nosotros') }}" class="text-[15px] text-black/80">{{__("Nosotros")}}</a>
 
                 <a href="{{ route('calidad') }}" class="text-[15px] text-black/80">{{__("Trabaja con nosotros")}}</a>
-                <a href="{{ route('contacto') }}" class="text-[15px] text-black/80">{{__("Dónde comprar")}}</a>
-                <a href="{{ route('nosotros') }}" class="text-[15px] text-black/80">{{__("Comercio exterior")}}</a>
-                <a href="{{ route('productos') }}" class="text-[15px] text-black/80">{{__("Contacto")}}</a>
+                <a href="{{ route('donde-comprar.index') }}" class="text-[15px] text-black/80">{{__("Dónde comprar")}}</a>
+                <a href="{{ route('comercio.exterior') }}" class="text-[15px] text-black/80">{{__("Comercio exterior")}}</a>
+                <a href="{{ route('contacto') }}" class="text-[15px] text-black/80">{{__("Contacto")}}</a>
                 <a href="{{ route('login') }}" target="_blank"
                     class="text-[15px] text-black/80">{{__("Área cliente")}}</a>
 
@@ -54,32 +54,32 @@
         </div>
 
         {{-- Secciones - Mobile --}}
-        <div class="flex flex-col items-center gap-6 sm:hidden">
+        <div class="flex w-full max-w-[360px] flex-col items-center gap-5 sm:hidden">
             <h2 class=" text-black text-[16px] font-semibold">{{__("Secciones")}}</h2>
-            <div class="flex flex-wrap justify-center gap-x-6 gap-y-4">
-                <a href="/" class="text-[15px] text-black/80">{{__("Inicio")}}</a>
-                <a href="{{ route('productos') }}" class="text-[15px] text-black/80">{{__("Productos")}}</a>
+            <div class="grid w-full grid-cols-2 gap-x-4 gap-y-3 text-center">
+                <a href="/" class="min-w-0 text-sm text-black/80">{{__("Inicio")}}</a>
+                <a href="{{ route('productos') }}" class="min-w-0 text-sm text-black/80">{{__("Productos")}}</a>
 
-                <a href="{{ route('nosotros') }}" class="text-[15px] text-black/80">{{__("Nosotros")}}</a>
-                <a href="{{ route('calidad') }}" class="text-[15px] text-black/80">{{__("Trabaja con nosotros")}}</a>
-                <a href="{{ route('contacto') }}" class="text-[15px] text-black/80">{{__("Dónde comprar")}}</a>
-                <a href="{{ route('nosotros') }}" class="text-[15px] text-black/80">{{__("Comercio exterior")}}</a>
-                <a href="{{ route('productos') }}" class="text-[15px] text-black/80">{{__("Contacto")}}</a>
+                <a href="{{ route('nosotros') }}" class="min-w-0 text-sm text-black/80">{{__("Nosotros")}}</a>
+                <a href="{{ route('calidad') }}" class="min-w-0 text-sm text-black/80">{{__("Trabaja con nosotros")}}</a>
+                <a href="{{ route('donde-comprar.index') }}" class="min-w-0 text-sm text-black/80">{{__("Dónde comprar")}}</a>
+                <a href="{{ route('comercio.exterior') }}" class="min-w-0 text-sm text-black/80">{{__("Comercio exterior")}}</a>
+                <a href="{{ route('contacto') }}" class="min-w-0 text-sm text-black/80">{{__("Contacto")}}</a>
                 <a href="{{ route('login') }}" target="_blank"
-                    class="text-[15px] text-black/80">{{__("Área cliente")}}</a>
+                    class="min-w-0 text-sm text-black/80">{{__("Área cliente")}}</a>
             </div>
         </div>
 
 
 
         {{-- Datos de contacto --}}
-        <div class="flex h-full flex-col items-center gap-6 lg:items-start ">
-            <h2 class="text-lg font-bold text-black">R.O.S MATERIALES ELÉCTRICOS S.R.L.</h2>
-            <div class="flex flex-col justify-center gap-4">
+        <div class="flex h-full w-full max-w-[326px] flex-col items-center gap-5 text-center lg:items-start lg:text-left">
+            <h2 class="text-base font-bold text-black">R.O.S MATERIALES ELÉCTRICOS S.R.L.</h2>
+            <div class="flex w-full flex-col justify-center gap-4">
                 @if(!empty($contacto->location))
                     <a href="https://maps.google.com/?q={{ urlencode($contacto->location) }}" target="_blank"
                         rel="noopener noreferrer"
-                        class="flex items-center gap-3 transition-opacity hover:opacity-80 max-w-[326px]">
+                        class="flex items-center gap-3 text-left transition-opacity hover:opacity-80">
                         <div class="shrink-0">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="20" viewBox="0 0 16 20" fill="none">
                                 <path
@@ -95,7 +95,7 @@
                 @if(!empty($contacto->location_dos))
                     <a href="https://maps.google.com/?q={{ urlencode($contacto->location_dos) }}" target="_blank"
                         rel="noopener noreferrer"
-                        class="flex items-center gap-3 transition-opacity hover:opacity-80 max-w-[326px]">
+                        class="flex items-center gap-3 text-left transition-opacity hover:opacity-80">
                         <div class="shrink-0">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                                 <path
