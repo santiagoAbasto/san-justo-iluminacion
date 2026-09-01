@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nuevo Mensaje de Contacto - Autopartes TB</title>
+    <title>Nuevo mensaje de contacto - San Justo Iluminación</title>
     <style>
         /* Estilos generales */
         body {
@@ -194,7 +194,7 @@
         </div>
 
         <div class="footer">
-            <p>© {{ date('Y') }} Autopartes TB. Todos los derechos reservados.</p>
+            <p>© {{ date('Y') }} San Justo Iluminación. Todos los derechos reservados.</p>
 
         </div>
     </div>

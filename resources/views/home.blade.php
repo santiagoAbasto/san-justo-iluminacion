@@ -1,8 +1,8 @@
 @extends('layouts.default')
 
-@section('title', 'San Justo Iluminación')
+@section('title', 'San Justo Iluminación | Fabricantes de iluminación')
 
-@section('description', $metadatos->description ?? '')
+@section('description', $metadatos->description ?? 'Diseñamos y fabricamos artefactos de iluminación para hogares, comercios y proyectos. Conocé nuestras líneas, catálogos y puntos de venta.')
 @section('keywords', $metadatos->keywords ?? '')
 
 @section('content')

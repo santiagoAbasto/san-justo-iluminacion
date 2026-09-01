@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\DondeComprarContenido;
+use App\Models\Metadatos;
 use App\Models\Provincia;
 use App\Models\PuntoVenta;
 use Illuminate\Http\Request;
@@ -22,6 +23,7 @@ class PuntoVentaController extends Controller
 
         $provincias = Provincia::orderBy('name')->with('localidades')->get();
         $contenido = DondeComprarContenido::first();
+        $metadatos = Metadatos::where('title', 'Donde comprar')->orderBy('id')->first();
 
         $localidades = [];
         if ($provincia) {
@@ -29,7 +31,7 @@ class PuntoVentaController extends Controller
             $localidades = $provinciaObj ? $provinciaObj->localidades : [];
         }
 
-        return view('donde-comprar', compact('puntosVenta', 'provincias', 'localidades', 'provincia', 'localidad', 'contenido'));
+        return view('donde-comprar', compact('puntosVenta', 'provincias', 'localidades', 'provincia', 'localidad', 'contenido', 'metadatos'));
     }
 
     // API para obtener puntos de venta (AJAX)
@@ -55,7 +57,9 @@ class PuntoVentaController extends Controller
 
         $puntosVenta = $query->get();
 
-        return response()->json($puntosVenta);
+        return response()
+            ->json($puntosVenta)
+            ->header('X-Robots-Tag', 'noindex, nofollow, noarchive');
     }
 
     // API para obtener localidades por provincia
@@ -64,7 +68,9 @@ class PuntoVentaController extends Controller
         $provincia = $request->get('provincia');
 
         if (!$provincia) {
-            return response()->json([]);
+            return response()
+                ->json([])
+                ->header('X-Robots-Tag', 'noindex, nofollow, noarchive');
         }
 
         // Obtener localidades desde la tabla de provincias/localidades
@@ -87,7 +93,9 @@ class PuntoVentaController extends Controller
             ->sortBy('name')
             ->values();
 
-        return response()->json($todasLocalidades);
+        return response()
+            ->json($todasLocalidades)
+            ->header('X-Robots-Tag', 'noindex, nofollow, noarchive');
     }
 
     public function indexAdmin(Request $request)

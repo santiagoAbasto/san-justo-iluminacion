@@ -1,6 +1,6 @@
 @extends('layouts.default')
 
-@section('title', 'Trabaja con nosotros - San Justo Iluminacion')
+@section('title', 'Trabajá con nosotros | San Justo Iluminación')
 
 @section('description', $metadatos->description ?? "")
 @section('keywords', $metadatos->keywords ?? "")

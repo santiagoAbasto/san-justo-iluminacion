@@ -1,6 +1,7 @@
 @extends('layouts.default')
 
 @section('title', 'Área de clientes | San Justo Iluminación')
+@section('robots', 'noindex, nofollow, noarchive')
 
 @section('content')
     <main class="min-h-[calc(100vh-100px)] bg-gray-50 px-4 py-16 sm:px-6 lg:px-8">

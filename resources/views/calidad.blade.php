@@ -1,8 +1,8 @@
 @extends('layouts.default')
 
-@section('title', 'Calidad - SR33')
+@section('title', 'Calidad y certificaciones | San Justo Iluminación')
 
-@section('description', $metadatos->description ?? "")
+@section('description', $metadatos->description ?? 'Conocé los estándares de calidad, certificaciones y catálogos de productos de San Justo Iluminación.')
 @section('keywords', $metadatos->keywords ?? "")
 
 @section('content')

@@ -1,7 +1,27 @@
 @extends('layouts.default')
-@section('title', 'San Justo Iluminacion - ' . $producto->code)
+@section('title', $producto->name . ' ' . $producto->code . ' | San Justo Iluminación')
 
-@section('description', $producto->name ?? "")
+@section('description', \Illuminate\Support\Str::limit(strip_tags($producto->desc_visible ?: $producto->name), 155))
+@section('seo_image', $producto->imagenes->first()->image ?? '')
+@section('canonical', route('producto.show', $producto->code))
+
+@push('head')
+    <script type="application/ld+json">
+        @json(array_filter([
+            '@context' => 'https://schema.org',
+            '@type' => 'Product',
+            'name' => $producto->name,
+            'sku' => $producto->code,
+            'description' => \Illuminate\Support\Str::limit(strip_tags($producto->desc_visible ?: $producto->name), 500),
+            'image' => $producto->imagenes->pluck('image')->values()->all(),
+            'brand' => [
+                '@type' => 'Brand',
+                'name' => 'San Justo Iluminación',
+            ],
+            'url' => url('/productos/' . $producto->code),
+        ]), JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)
+    </script>
+@endpush
 
 
 @section('content')

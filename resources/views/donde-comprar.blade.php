@@ -1,6 +1,8 @@
 @extends('layouts.default')
 
-@section('title', 'Donde comprar - San Justo Iluminación')
+@section('title', 'Dónde comprar | San Justo Iluminación')
+@section('description', $metadatos->description ?? 'Encontrá distribuidores y puntos de venta de San Justo Iluminación en Argentina. Buscá por provincia, localidad o comercio.')
+@section('keywords', $metadatos->keywords ?? '')
 
 @push('head')
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />

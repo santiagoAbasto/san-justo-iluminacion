@@ -67,6 +67,8 @@ class ProductoController extends Controller
 
     public function indexVistaPrevia(Request $request)
     {
+        $metadatos = Metadatos::where('title', 'Productos')->orderBy('id')->first();
+
         // Construir query base para productos
         $query = Producto::query();
 
@@ -126,6 +128,7 @@ class ProductoController extends Controller
         }
 
         return view('productos', [
+            'metadatos' => $metadatos,
             'productos' => $productos,
             'espacios' => $espacios,
             'espacio' => $request->espacio,
@@ -152,7 +155,9 @@ class ProductoController extends Controller
             $usos = Uso::orderBy('order', 'asc')->get();
         }
 
-        return response()->json($usos);
+        return response()
+            ->json($usos)
+            ->header('X-Robots-Tag', 'noindex, nofollow, noarchive');
     }
 
     public function getAmbientesByLinea(Request $request)
@@ -166,7 +171,9 @@ class ProductoController extends Controller
             $ambientes = Ambiente::orderBy('order', 'asc')->get();
         }
 
-        return response()->json($ambientes);
+        return response()
+            ->json($ambientes)
+            ->header('X-Robots-Tag', 'noindex, nofollow, noarchive');
     }
 
     public function show($codigo, Request $request)

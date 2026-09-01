@@ -2,7 +2,7 @@
 
 @section('title', 'Recursos - San Justo Iluminación')
 
-@section('description', $metadatos->description ?? "")
+@section('description', $metadatos->description ?? 'Accedé a recursos, documentación y materiales de San Justo Iluminación.')
 @section('keywords', $metadatos->keywords ?? "")
 
 @section('content')

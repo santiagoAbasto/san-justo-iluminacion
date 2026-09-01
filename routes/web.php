@@ -7,12 +7,22 @@ use App\Http\Controllers\NovedadesController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\PuntoVentaController;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\SeoController;
 use App\Http\Controllers\TrabajaConNosotrosController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 // Compatibilidad con el acceso al área de clientes del sitio anterior.
-Route::redirect('/pedidos/login.php', '/login');
+Route::permanentRedirect('/pedidos/login.php', '/login');
+
+// Redirecciones permanentes del sitio anterior.
+Route::permanentRedirect('/lineas-de-productos', '/productos');
+Route::permanentRedirect('/productos-colgantes', '/productos');
+Route::permanentRedirect('/productos-faroles-y-farolas', '/productos');
+Route::permanentRedirect('/productos-linea-bidireccionales', '/productos');
+Route::permanentRedirect('/catalogo-general-2023', '/calidad');
+
+Route::get('/sitemap.xml', [SeoController::class, 'sitemap'])->name('seo.sitemap');
 
 Route::middleware(['LocaleMiddleware'])->group(function () {
     Route::get('/', [HomePages::class, 'home'])->name('home');

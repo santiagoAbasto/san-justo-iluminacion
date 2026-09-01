@@ -35,7 +35,11 @@ class HomePages extends Controller
 {
     public function home()
     {
-        $metadatos = Metadatos::where('title', 'Inicio')->first();
+        // La base histórica contiene dos registros "home". Usamos el primero,
+        // que es el que se administra actualmente, y conservamos compatibilidad
+        // con instalaciones que lo hayan guardado como "Inicio".
+        $metadatos = Metadatos::where('title', 'home')->orderBy('id')->first()
+            ?? Metadatos::where('title', 'Inicio')->orderBy('id')->first();
 
         $categorias = Categoria::orderBy('order', 'asc')->get();
         $subcategorias = SubCategoria::orderBy('order', 'asc')->get();

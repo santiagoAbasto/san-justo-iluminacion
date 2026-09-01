@@ -1,4 +1,5 @@
 User-agent: *
-Disallow:
-Sitemap: https://sr-repuestos.com.ar/sitemap.xml
+Allow: /
+Disallow: /api/
 
+Sitemap: https://sanjustoiluminacion.com.ar/sitemap.xml

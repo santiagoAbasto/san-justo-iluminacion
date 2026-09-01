@@ -1,8 +1,8 @@
 @extends('layouts.default')
 
-@section('title', 'Novedades - SR33')
+@section('title', 'Novedades | San Justo Iluminación')
 
-@section('description', $metadatos->description ?? "")
+@section('description', $metadatos->description ?? 'Conocé los nuevos productos, lanzamientos y novedades de San Justo Iluminación.')
 @section('keywords', $metadatos->keywords ?? "")
 
 @section('content')

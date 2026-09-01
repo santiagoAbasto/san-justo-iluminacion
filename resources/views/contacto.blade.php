@@ -1,14 +1,9 @@
 @extends('layouts.default')
 
-@section('title', 'Contacto -  San Justo Iluminacion')
+@section('title', 'Contacto | San Justo Iluminación')
 
 @section('description', $metadatos->description ?? "")
 @section('keywords', $metadatos->keywords ?? "")
-
-@push('head')
-    <meta name="description" content="{{ $metadatos->description ?? '' }}">
-    <meta name="keywords" content="{{ $metadatos->keywords ?? '' }}">
-@endpush
 
 @section('content')
 

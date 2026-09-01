@@ -1,6 +1,9 @@
 @extends('layouts.default')
 
-@section('title', $novedad->title . ' - Autopartes TB')
+@section('title', $novedad->title . ' | San Justo Iluminación')
+@section('description', \Illuminate\Support\Str::limit(strip_tags($novedad->text), 155))
+@section('seo_image', $novedad->image)
+@section('canonical', route('novedades.show', $novedad->id))
 
 @section('content')
     <div class="relative flex h-[400px] w-full items-center justify-center">
