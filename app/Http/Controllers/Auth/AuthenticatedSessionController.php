@@ -16,8 +16,11 @@ class AuthenticatedSessionController extends Controller
      */
     public function create(Request $request)
     {
+        if (Auth::check()) {
+            return redirect('/privada/productos');
+        }
 
-        return redirect('/');
+        return view('auth.login');
     }
 
     /**
