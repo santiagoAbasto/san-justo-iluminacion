@@ -56,7 +56,7 @@
         {{-- Secciones - Mobile --}}
         <div class="flex w-full max-w-[360px] flex-col items-center gap-5 sm:hidden">
             <h2 class=" text-black text-[16px] font-semibold">{{__("Secciones")}}</h2>
-            <div class="grid w-full grid-cols-2 gap-x-4 gap-y-3 text-center">
+            <div class="grid w-full grid-cols-2 gap-x-4 gap-y-3 text-center max-[375px]:grid-cols-1">
                 <a href="/" class="min-w-0 text-sm text-black/80">{{__("Inicio")}}</a>
                 <a href="{{ route('productos') }}" class="min-w-0 text-sm text-black/80">{{__("Productos")}}</a>
 
@@ -79,7 +79,7 @@
                 @if(!empty($contacto->location))
                     <a href="https://maps.google.com/?q={{ urlencode($contacto->location) }}" target="_blank"
                         rel="noopener noreferrer"
-                        class="flex items-center gap-3 text-left transition-opacity hover:opacity-80">
+                        class="flex min-w-0 items-center gap-3 text-left transition-opacity hover:opacity-80">
                         <div class="shrink-0">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="20" viewBox="0 0 16 20" fill="none">
                                 <path
@@ -88,14 +88,14 @@
                             </svg>
                         </div>
 
-                        <p class="text-base text-black/80 break-words">{{ $contacto->location }}</p>
+                        <p class="min-w-0 break-words text-base text-black/80">{{ $contacto->location }}</p>
                     </a>
                 @endif
 
                 @if(!empty($contacto->location_dos))
                     <a href="https://maps.google.com/?q={{ urlencode($contacto->location_dos) }}" target="_blank"
                         rel="noopener noreferrer"
-                        class="flex items-center gap-3 text-left transition-opacity hover:opacity-80">
+                        class="flex min-w-0 items-center gap-3 text-left transition-opacity hover:opacity-80">
                         <div class="shrink-0">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                                 <path
@@ -107,13 +107,13 @@
                             </svg>
                         </div>
 
-                        <p class="text-base text-black/80 break-words">{{ $contacto->location_dos }}</p>
+                        <p class="min-w-0 break-words text-base text-black/80">{{ $contacto->location_dos }}</p>
                     </a>
                 @endif
 
                 @if(!empty($contacto->mail))
                     <a href="mailto:{{ $contacto->mail }}"
-                        class="flex items-center gap-3 transition-opacity hover:opacity-80">
+                        class="flex min-w-0 items-center gap-3 transition-opacity hover:opacity-80">
                         <div class="shrink-0">
                             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="14" viewBox="0 0 18 14" fill="none">
                                 <path
@@ -121,13 +121,13 @@
                                     fill="black" />
                             </svg>
                         </div>
-                        <p class="text-base text-black/80 break-words">{{ $contacto->mail }}</p>
+                        <p class="min-w-0 break-all text-sm text-black/80 sm:break-words sm:text-base">{{ $contacto->mail }}</p>
                     </a>
                 @endif
 
                 @if(!empty($contacto->phone))
                     <a href="tel:{{ preg_replace('/\s/', '', $contacto->phone) }}"
-                        class="flex items-center gap-3 transition-opacity hover:opacity-80">
+                        class="flex min-w-0 items-center gap-3 transition-opacity hover:opacity-80">
                         <div class="shrink-0">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
                                 <path
@@ -135,7 +135,7 @@
                                     fill="black" />
                             </svg>
                         </div>
-                        <p class="text-base text-black/80 break-words">{{ $contacto->phone }}</p>
+                        <p class="min-w-0 break-words text-base text-black/80">{{ $contacto->phone }}</p>
                     </a>
                 @endif
 

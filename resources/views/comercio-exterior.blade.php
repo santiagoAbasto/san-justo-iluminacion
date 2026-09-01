@@ -52,8 +52,8 @@
                     @foreach ($tarjetas->take(3) as $tarjeta)
                         <div
                             class="flex flex-col h-[350px] max-sm:h-auto max-sm:min-h-[280px] py-8 max-sm:py-6 border rounded-sm items-center px-4 max-sm:px-3 justify-between bg-white max-w-[288px] max-sm:max-w-full mx-auto">
-                            <div class="h-[66px] max-sm:h-[50px] my-4 max-sm:my-3">
-                                <img class="w-full h-full object-cover" src="{{ $tarjeta->image }}" alt="">
+                            <div class="my-4 h-[66px] w-[132px] max-sm:my-3 max-sm:h-[72px] max-sm:w-[132px]">
+                                <img class="h-full w-full object-contain" src="{{ $tarjeta->image }}" alt="">
                             </div>
                             <h2 class="text-[20px] max-sm:text-[18px] text-center font-semibold font-custom! py-4 max-sm:py-3">
                                 {{request('lang') == 'en' ? $tarjeta->name_en : $tarjeta->name_es}}
@@ -71,8 +71,8 @@
                             @foreach ($tarjetas->skip(3)->take(2) as $tarjeta)
                                 <div
                                     class="flex flex-col h-[341px] max-sm:h-auto max-sm:min-h-[280px] py-8 max-sm:py-6 border rounded-sm items-center px-4 max-sm:px-3 justify-between bg-white max-w-[288px] max-sm:max-w-full max-sm:mx-auto">
-                                    <div class="h-[66px] max-sm:h-[50px] my-4 max-sm:my-3">
-                                        <img class="w-full h-full object-cover" src="{{ $tarjeta->image }}" alt="">
+                                <div class="my-4 h-[66px] w-[132px] max-sm:my-3 max-sm:h-[72px] max-sm:w-[132px]">
+                                    <img class="h-full w-full object-contain" src="{{ $tarjeta->image }}" alt="">
                                     </div>
                                     <h2
                                         class="text-[20px] max-sm:text-[18px] text-center font-semibold font-custom! py-4 max-sm:py-3">
