@@ -200,10 +200,9 @@
                 inicializarMapa() {
                     this.mapa = L.map('mapa').setView([-34.6118, -58.3960], 6);
 
-                    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-                        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://www.carto.com/">CARTO</a>',
-                        subdomains: 'abcd',
-                        maxZoom: 20
+                    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                        maxZoom: 19
                     }).addTo(this.mapa);
                 },
 

@@ -2,8 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\Admin;
-use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -27,12 +25,6 @@ class DatabaseSeeder extends Seeder
             'telefono' => '01123456789',
             'lista' => 0,
         ]); */
-
-        Admin::factory()->create([
-            'name' => 'pablo',
-            'password' => bcrypt('pablopablo'),
-        ]);
-
 
         $this->call(PuntoVentaSeeder::class);
     }
