@@ -11,6 +11,9 @@ use App\Http\Controllers\TrabajaConNosotrosController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
+// Compatibilidad con el acceso al área de clientes del sitio anterior.
+Route::redirect('/pedidos/login.php', '/login');
+
 Route::middleware(['LocaleMiddleware'])->group(function () {
     Route::get('/', [HomePages::class, 'home'])->name('home');
 
