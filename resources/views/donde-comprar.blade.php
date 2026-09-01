@@ -245,9 +245,9 @@
   </defs>
 </svg>
     `,
-                        iconSize: [32, 32],
-                        iconAnchor: [16, 32],
-                        popupAnchor: [0, -32],
+                        iconSize: [38, 49],
+                        iconAnchor: [19, 46],
+                        popupAnchor: [0, -46],
                     });
 
 
