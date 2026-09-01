@@ -102,7 +102,7 @@
                                         <div
                                             class="w-[392px] min-h-[392px] rounded-tr-[70px] rounded-bl-[70px] overflow-hidden">
                                             @if ($linea->image)
-                                                <img src="{{ asset("storage/" . $linea->image) }}" alt="cliente"
+                                                <img src="{{ asset("storage/" . $linea->image) }}" alt="cliente" loading="lazy" decoding="async"
                                                     class="w-full h-full object-cover">
                                             @else
                                                 <div class="w-full h-full flex items-center justify-center bg-gray-100 text-gray-500">
@@ -152,7 +152,7 @@
                                     <div class="max-w-[350px] w-full mx-auto flex flex-col justify-between h-[480px]">
                                         <div class="w-full min-h-[300px] rounded-tr-[70px] rounded-bl-[70px] overflow-hidden">
                                             @if ($linea->image)
-                                                <img src="{{ asset("storage/" . $linea->image) }}" alt="cliente"
+                                                <img src="{{ asset("storage/" . $linea->image) }}" alt="cliente" loading="lazy" decoding="async"
                                                     class="w-full h-full object-cover">
                                             @else
                                                 <div class="w-full h-full flex items-center justify-center bg-gray-100 text-gray-500">
@@ -198,7 +198,7 @@
                                     class="max-w-[300px] w-full bg-white rounded-tr-[70px] rounded-bl-[70px] max-sm:rounded-none overflow-hidden shadow-sm">
                                     <div class="w-full h-[200px] max-sm:h-[180px]">
                                         @if ($linea->image)
-                                            <img src="{{ asset("storage/" . $linea->image) }}" alt="cliente"
+                                            <img src="{{ asset("storage/" . $linea->image) }}" alt="cliente" loading="lazy" decoding="async"
                                                 class="w-full h-full object-cover">
                                         @else
                                             <div class="w-full h-full flex items-center justify-center bg-gray-100 text-gray-500">

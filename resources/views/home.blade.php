@@ -38,7 +38,8 @@
     
             <!-- Columna derecha: imagen -->
             <div class="w-1/2">
-                <img src="{{ $homeInfo->custom_image_es }}" class="w-full h-full object-cover" alt="">
+                <img src="{{ $homeInfo->custom_image_es }}" class="w-full h-full object-cover" alt="" loading="lazy"
+                    decoding="async">
             </div>
         </div>
     </div>
@@ -57,7 +58,7 @@
                     return true; 
                 }
 
-                return true; 
+                return false;
             }
 
 

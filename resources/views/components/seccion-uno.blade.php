@@ -3,7 +3,8 @@
 
     <div
         class="w-full overflow-hidden rounded-tl-[70px] max-lg:rounded-tl-[50px] max-md:rounded-tl-[40px] max-sm:rounded-tl-[30px] rounded-br-[70px] max-lg:rounded-br-[50px] max-md:rounded-br-[40px] max-sm:rounded-br-[30px] max-h-[440px] max-lg:max-h-[350px] max-md:max-h-[300px] max-sm:max-h-[250px] border max-lg:order-2">
-        <img class="h-full w-full object-cover" src="{{$homeInfo->image_seccion_uno}}" alt="">
+        <img class="h-full w-full object-cover" src="{{$homeInfo->image_seccion_uno}}" alt="" loading="lazy"
+            decoding="async">
     </div>
 
     <div

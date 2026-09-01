@@ -20,8 +20,6 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
-    <!-- Leaflet CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <meta name="description" content="@yield('description', 'San Justo Iluminación') ">
     <meta name="keywords"
         content="@yield('keywords', 'iluminación, lámparas, artefactos, San Justo Iluminación')">
@@ -31,9 +29,6 @@
 <body class="font-sans text-gray-900 antialiased">
     <!-- Bootstrap JS -->
 
-
-    <!-- Leaflet JS -->
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
     {{-- Navbar --}}
     @include('components.navbar')

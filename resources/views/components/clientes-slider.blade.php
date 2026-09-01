@@ -96,7 +96,7 @@
                         <div class="grid grid-cols-6 justify-between gap-6 min-w-full">
                             @foreach ($chunk as $cliente)
                                 <div class="h-[122px] w-[184px] border rounded-tl-[36px] rounded-br-[36px] overflow-hidden">
-                                    <img src="{{ asset("storage/" . $cliente->image) }}" alt="cliente"
+                                    <img src="{{ asset("storage/" . $cliente->image) }}" alt="cliente" loading="lazy" decoding="async"
                                         class="w-full h-full object-contain transition-all duration-300 filter grayscale hover:grayscale-0">
                                 </div>
                             @endforeach
@@ -115,7 +115,7 @@
                     @foreach ($clientes as $cliente)
                         <div class="min-w-full flex justify-center">
                             <div class="max-h-[190px] max-w-[300px] w-full bg-white">
-                                <img src="{{ asset("storage/" . $cliente->image) }}" alt="cliente"
+                                <img src="{{ asset("storage/" . $cliente->image) }}" alt="cliente" loading="lazy" decoding="async"
                                     class="w-full h-full object-cover transition-all duration-300 filter lg:grayscale hover:grayscale-0">
                             </div>
                         </div>

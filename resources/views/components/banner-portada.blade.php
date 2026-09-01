@@ -6,9 +6,9 @@
             <div class="absolute inset-0 bg-black z-0">
                 @if (in_array($ext, ['jpg', 'jpeg', 'png', 'gif', 'webp']))
                     <img src="{{ $homeInfo->image_banner }}" alt="Slider Image" class="w-full h-full object-cover"
-                        data-duration="6000">
+                        data-duration="6000" fetchpriority="high" decoding="async">
                 @elseif (in_array($ext, ['mp4', 'webm', 'ogg']))
-                    <video class="w-full h-full object-cover object-center" loop autoplay muted>
+                    <video class="w-full h-full object-cover object-center" loop autoplay muted playsinline preload="metadata">
                         <source src="{{ $homeInfo->image_banner }}" type="video/{{ $ext }}">
                         {{ __('Tu navegador no soporta el formato de video.') }}
                     </video>

@@ -165,12 +165,14 @@
 
     <script>
         function mapaComponent() {
+            const puntosVentaIniciales = @json($puntosVenta);
+
             return {
                 mapa: null,
                 marcadores: [],
-                puntosVenta: @json($puntosVenta),
-                puntosVentaOriginales: @json($puntosVenta),
-                puntosVentaFiltrados: @json($puntosVenta),
+                puntosVenta: puntosVentaIniciales,
+                puntosVentaOriginales: [...puntosVentaIniciales],
+                puntosVentaFiltrados: [...puntosVentaIniciales],
                 puntoSeleccionado: null,
                 cargando: false,
                 filtros: {
