@@ -2,8 +2,9 @@
 
 @section('title', 'Donde comprar - San Justo Iluminación')
 
-@push('styles')
+@push('head')
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@5.6.1/dist/maplibre-gl.css" />
     <style>
         #mapa {
             height: 500px;
@@ -198,12 +199,23 @@
                 },
 
                 inicializarMapa() {
-                    this.mapa = L.map('mapa').setView([-34.6118, -58.3960], 6);
-
-                    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                    this.mapa = L.map('mapa', {
+                        minZoom: 1,
                         maxZoom: 19
-                    }).addTo(this.mapa);
+                    }).setView([-34.6118, -58.3960], 6);
+
+                    if (typeof L.maplibreGL === 'function') {
+                        L.maplibreGL({
+                            style: 'https://tiles.openfreemap.org/styles/positron',
+                            attributionControl: false
+                        }).addTo(this.mapa);
+                    } else {
+                        console.warn('MapLibre no está disponible; se usará el mapa base de respaldo.');
+                        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                            maxZoom: 19
+                        }).addTo(this.mapa);
+                    }
                 },
 
                 cargarMarcadores() {
@@ -362,4 +374,6 @@
 
 @push('scripts')
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/maplibre-gl@5.6.1/dist/maplibre-gl.js"></script>
+    <script src="https://unpkg.com/@maplibre/maplibre-gl-leaflet@0.1.4/leaflet-maplibre-gl.js"></script>
 @endpush
