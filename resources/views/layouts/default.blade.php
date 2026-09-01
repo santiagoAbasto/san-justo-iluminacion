@@ -64,7 +64,7 @@
         content="@yield('keywords', 'iluminación, lámparas, artefactos, San Justo Iluminación')">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <script type="application/ld+json">
-        @json([
+        {!! json_encode([
             '@context' => 'https://schema.org',
             '@type' => 'Organization',
             'name' => 'San Justo Iluminación',
@@ -74,7 +74,7 @@
                 'https://www.facebook.com/sanjustoiluminacion/',
                 'https://www.instagram.com/sanjusto_iluminacion/',
             ],
-        ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)
+        ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}
     </script>
 </head>
 
