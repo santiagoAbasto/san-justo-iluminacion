@@ -46,7 +46,7 @@
                 <a href="{{ route('contacto') }}" class="text-[15px] text-black/80">{{__("Dónde comprar")}}</a>
                 <a href="{{ route('nosotros') }}" class="text-[15px] text-black/80">{{__("Comercio exterior")}}</a>
                 <a href="{{ route('productos') }}" class="text-[15px] text-black/80">{{__("Contacto")}}</a>
-                <a href="https://sanjustoiluminacion.com.ar/pedidos/login.php" target="_blank"
+                <a href="{{ route('login') }}" target="_blank"
                     class="text-[15px] text-black/80">{{__("Área cliente")}}</a>
 
 
@@ -65,7 +65,7 @@
                 <a href="{{ route('contacto') }}" class="text-[15px] text-black/80">{{__("Dónde comprar")}}</a>
                 <a href="{{ route('nosotros') }}" class="text-[15px] text-black/80">{{__("Comercio exterior")}}</a>
                 <a href="{{ route('productos') }}" class="text-[15px] text-black/80">{{__("Contacto")}}</a>
-                <a href="https://sanjustoiluminacion.com.ar/pedidos/login.php" target="_blank"
+                <a href="{{ route('login') }}" target="_blank"
                     class="text-[15px] text-black/80">{{__("Área cliente")}}</a>
             </div>
         </div>

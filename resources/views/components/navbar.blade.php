@@ -84,7 +84,7 @@
                         <option class="text-black" value="?lang=en" {{ request('lang') === 'en' ? 'selected' : '' }}>EN</option>
                     </select>
                     <span>|</span>
-                    <a href="https://sanjustoiluminacion.com.ar/pedidos/login.php" target="_blank"
+                    <a href="{{ route('login') }}" target="_blank"
                        class="border flex items-center justify-center rounded-sm text-[14px] leading-none w-[136px] h-[42px]"
                        :class="scrolled ? 'border-black text-black' : 'border-white text-white'">
                         {{ __('AREA CLIENTE') }}
@@ -178,7 +178,7 @@
                         <option value="?lang=en" {{ request('lang') === 'en' ? 'selected' : '' }}>EN</option>
                     </select>
                 </div>
-                <a href="https://sanjustoiluminacion.com.ar/pedidos/login.php" target="_blank"
+                <a href="{{ route('login') }}" target="_blank"
                    class="border flex items-center justify-center rounded-sm text-[14px] leading-none w-[136px] h-[42px]"
                    :class="scrolled ? 'border-black text-black' : 'border-white text-white'">
                    {{ __('AREA CLIENTE') }}
