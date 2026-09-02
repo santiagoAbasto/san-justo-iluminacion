@@ -12,8 +12,8 @@ use App\Http\Controllers\TrabajaConNosotrosController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-// Compatibilidad con el acceso al área de clientes del sitio anterior.
-Route::permanentRedirect('/pedidos/login.php', '/login');
+// El área de clientes se gestiona en el portal comercial externo.
+Route::permanentRedirect('/pedidos/login.php', 'https://proyecto4.ddns.net/proyecto4/login');
 
 // Redirecciones permanentes del sitio anterior.
 Route::permanentRedirect('/lineas-de-productos', '/productos');

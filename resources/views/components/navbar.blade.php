@@ -84,7 +84,7 @@
                         <option class="text-black" value="?lang=en" {{ request('lang') === 'en' ? 'selected' : '' }}>EN</option>
                     </select>
                     <span>|</span>
-                    <a href="{{ route('login') }}" target="_blank"
+                    <a href="https://proyecto4.ddns.net/proyecto4/login" target="_blank" rel="noopener noreferrer"
                        class="border flex items-center justify-center rounded-sm text-[14px] leading-none w-[136px] h-[42px]"
                        :class="scrolled ? 'border-black text-black' : 'border-white text-white'">
                         {{ __('AREA CLIENTE') }}
@@ -178,7 +178,7 @@
                         <option value="?lang=en" {{ request('lang') === 'en' ? 'selected' : '' }}>EN</option>
                     </select>
                 </div>
-                <a href="{{ route('login') }}" target="_blank"
+                <a href="https://proyecto4.ddns.net/proyecto4/login" target="_blank" rel="noopener noreferrer"
                    class="border flex items-center justify-center rounded-sm text-[14px] leading-none w-[136px] h-[42px]"
                    :class="scrolled ? 'border-black text-black' : 'border-white text-white'">
                    {{ __('AREA CLIENTE') }}

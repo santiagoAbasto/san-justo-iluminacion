@@ -46,7 +46,7 @@
                 <a href="{{ route('donde-comprar.index') }}" class="text-[15px] text-black/80">{{__("Dónde comprar")}}</a>
                 <a href="{{ route('comercio.exterior') }}" class="text-[15px] text-black/80">{{__("Comercio exterior")}}</a>
                 <a href="{{ route('contacto') }}" class="text-[15px] text-black/80">{{__("Contacto")}}</a>
-                <a href="{{ route('login') }}" target="_blank"
+                <a href="https://proyecto4.ddns.net/proyecto4/login" target="_blank" rel="noopener noreferrer"
                     class="text-[15px] text-black/80">{{__("Área cliente")}}</a>
 
 
@@ -65,7 +65,7 @@
                 <a href="{{ route('donde-comprar.index') }}" class="min-w-0 text-sm text-black/80">{{__("Dónde comprar")}}</a>
                 <a href="{{ route('comercio.exterior') }}" class="min-w-0 text-sm text-black/80">{{__("Comercio exterior")}}</a>
                 <a href="{{ route('contacto') }}" class="min-w-0 text-sm text-black/80">{{__("Contacto")}}</a>
-                <a href="{{ route('login') }}" target="_blank"
+                <a href="https://proyecto4.ddns.net/proyecto4/login" target="_blank" rel="noopener noreferrer"
                     class="min-w-0 text-sm text-black/80">{{__("Área cliente")}}</a>
             </div>
         </div>
