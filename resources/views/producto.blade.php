@@ -106,12 +106,20 @@
                                     <div class="flex flex-row text-[16px] max-sm:text-[14px] justify-between border-b pb-2">
                                         <p class="">{{__("Colores")}}</p>
 
-                                        <div class="flex flex-row gap-1">
+                                        <div class="flex flex-row gap-1.5" aria-label="Colores disponibles">
                                             @foreach ($producto->colores as $color)
-                                                <div class="w-[26px] h-[26px] max-sm:w-[20px] max-sm:h-[20px] rounded-sm border"
-                                                    style="background-color: {{ $color->hex }}">
-
-                                                </div>
+                                                <span class="group/color relative inline-flex">
+                                                    <span
+                                                        tabindex="0"
+                                                        role="img"
+                                                        aria-label="Color: {{ $color->name }}"
+                                                        class="h-[26px] w-[26px] cursor-help rounded-sm border border-black/15 shadow-sm outline-none transition duration-200 ease-out hover:scale-110 hover:ring-2 hover:ring-primary-orange/45 hover:ring-offset-2 focus:scale-110 focus:ring-2 focus:ring-primary-orange/45 focus:ring-offset-2 max-sm:h-[22px] max-sm:w-[22px]"
+                                                        style="background-color: {{ $color->hex }}"
+                                                    ></span>
+                                                    <span role="tooltip" class="pointer-events-none absolute bottom-full right-0 z-20 mb-2 whitespace-nowrap rounded-sm bg-[#101828] px-2.5 py-1.5 text-xs font-medium text-white opacity-0 shadow-md translate-y-1 transition duration-200 ease-out group-hover/color:translate-y-0 group-hover/color:opacity-100 group-focus-within/color:translate-y-0 group-focus-within/color:opacity-100 motion-reduce:transition-none">
+                                                        {{ $color->name }}
+                                                    </span>
+                                                </span>
                                             @endforeach
 
                                         </div>
