@@ -275,7 +275,7 @@
             display: inline-block;
             width: 26px;
             height: 26px;
-            cursor: help;
+            cursor: pointer;
             outline: none;
         }
 
