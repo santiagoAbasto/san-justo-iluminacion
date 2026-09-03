@@ -106,17 +106,18 @@
                                     <div class="flex flex-row text-[16px] max-sm:text-[14px] justify-between border-b pb-2">
                                         <p class="">{{__("Colores")}}</p>
 
-                                        <div class="flex flex-row gap-1.5" aria-label="Colores disponibles">
+                                        <div class="flex flex-row items-end gap-2" aria-label="Colores disponibles">
                                             @foreach ($producto->colores as $color)
-                                                <span class="group/color relative inline-flex">
+                                                <span class="group/color relative inline-flex hover:z-10 focus-within:z-10">
                                                     <span
                                                         tabindex="0"
                                                         role="img"
                                                         aria-label="Color: {{ $color->name }}"
-                                                        class="h-[26px] w-[26px] cursor-help rounded-sm border border-black/15 shadow-sm outline-none transition duration-200 ease-out hover:scale-110 hover:ring-2 hover:ring-primary-orange/45 hover:ring-offset-2 focus:scale-110 focus:ring-2 focus:ring-primary-orange/45 focus:ring-offset-2 max-sm:h-[22px] max-sm:w-[22px]"
+                                                        title="{{ $color->name }}"
+                                                        class="h-[28px] w-[28px] cursor-help rounded-sm border border-black/15 shadow-sm outline-none transition-[transform,box-shadow,outline-color] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-3 hover:scale-125 hover:shadow-md hover:ring-2 hover:ring-primary-orange/55 hover:ring-offset-2 focus:-translate-y-3 focus:scale-125 focus:shadow-md focus:ring-2 focus:ring-primary-orange/55 focus:ring-offset-2 max-sm:h-[24px] max-sm:w-[24px]"
                                                         style="background-color: {{ $color->hex }}"
                                                     ></span>
-                                                    <span role="tooltip" class="pointer-events-none absolute bottom-full right-0 z-20 mb-2 whitespace-nowrap rounded-sm bg-[#101828] px-2.5 py-1.5 text-xs font-medium text-white opacity-0 shadow-md translate-y-1 transition duration-200 ease-out group-hover/color:translate-y-0 group-hover/color:opacity-100 group-focus-within/color:translate-y-0 group-focus-within/color:opacity-100 motion-reduce:transition-none">
+                                                    <span role="tooltip" class="pointer-events-none absolute bottom-full left-1/2 z-20 mb-3 -translate-x-1/2 translate-y-1 whitespace-nowrap rounded-sm bg-[#101828] px-2.5 py-1.5 text-xs font-medium text-white opacity-0 shadow-md transition duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover/color:translate-y-0 group-hover/color:opacity-100 group-focus-within/color:translate-y-0 group-focus-within/color:opacity-100 motion-reduce:transition-none">
                                                         {{ $color->name }}
                                                     </span>
                                                 </span>
