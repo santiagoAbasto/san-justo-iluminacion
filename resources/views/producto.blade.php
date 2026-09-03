@@ -108,16 +108,15 @@
 
                                         <div class="flex flex-row items-end gap-1" aria-label="Colores disponibles">
                                             @foreach ($producto->colores as $color)
-                                                <span class="group relative inline-flex h-[26px] w-[26px] max-sm:h-[20px] max-sm:w-[20px] hover:z-10 focus-within:z-10">
-                                                    <span
-                                                        tabindex="0"
-                                                        role="img"
-                                                        aria-label="Color: {{ $color->name }}"
-                                                        title="{{ $color->name }}"
-                                                        class="absolute inset-0 cursor-help rounded-sm border border-black/15 outline-none transition-transform duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-2 focus:-translate-y-2 motion-reduce:transition-none"
-                                                        style="background-color: {{ $color->hex }}"
-                                                    ></span>
-                                                    <span role="tooltip" class="pointer-events-none absolute bottom-[calc(100%+8px)] left-1/2 z-20 -translate-x-1/2 translate-y-1 whitespace-nowrap rounded-sm bg-[#101828] px-2 py-1 text-[11px] font-medium text-white opacity-0 transition duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:translate-y-0 group-focus-within:opacity-100 motion-reduce:transition-none">
+                                                <span
+                                                    tabindex="0"
+                                                    role="img"
+                                                    aria-label="Color: {{ $color->name }}"
+                                                    title="{{ $color->name }}"
+                                                    class="product-color-swatch"
+                                                >
+                                                    <span class="product-color-swatch__chip" style="background-color: {{ $color->hex }}"></span>
+                                                    <span role="tooltip" class="product-color-swatch__label">
                                                         {{ $color->name }}
                                                     </span>
                                                 </span>
@@ -269,6 +268,77 @@
     <style>
         #mainImage {
             opacity: 0;
+        }
+
+        .product-color-swatch {
+            position: relative;
+            display: inline-block;
+            width: 26px;
+            height: 26px;
+            cursor: help;
+            outline: none;
+        }
+
+        .product-color-swatch__chip {
+            position: absolute;
+            inset: 0;
+            border: 1px solid rgba(16, 24, 40, 0.15);
+            border-radius: 2px;
+            transition: transform 200ms cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .product-color-swatch__label {
+            position: absolute;
+            z-index: 20;
+            bottom: calc(100% + 10px);
+            left: 50%;
+            display: block;
+            width: max-content;
+            max-width: 160px;
+            padding: 4px 8px;
+            overflow: hidden;
+            border-radius: 2px;
+            background: #101828;
+            color: #fff;
+            font-size: 11px;
+            font-weight: 600;
+            line-height: 1.2;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            pointer-events: none;
+            opacity: 0;
+            transform: translate(-50%, 6px);
+            transition: opacity 160ms ease-out, transform 200ms cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .product-color-swatch:hover,
+        .product-color-swatch:focus-visible {
+            z-index: 10;
+        }
+
+        .product-color-swatch:hover .product-color-swatch__chip,
+        .product-color-swatch:focus-visible .product-color-swatch__chip {
+            transform: translateY(-10px);
+        }
+
+        .product-color-swatch:hover .product-color-swatch__label,
+        .product-color-swatch:focus-visible .product-color-swatch__label {
+            opacity: 1;
+            transform: translate(-50%, 0);
+        }
+
+        @media (max-width: 640px) {
+            .product-color-swatch {
+                width: 20px;
+                height: 20px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .product-color-swatch__chip,
+            .product-color-swatch__label {
+                transition: none;
+            }
         }
     </style>
 @endsection
