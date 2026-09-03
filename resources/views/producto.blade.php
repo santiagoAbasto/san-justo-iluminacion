@@ -103,7 +103,7 @@
                                 @endif
 
                                 @if ($producto->colores->count() > 0)
-                                    <div class="flex flex-row text-[16px] max-sm:text-[14px] justify-between border-b pb-2">
+                                    <div class="flex flex-row text-[16px] max-sm:text-[14px] justify-between border-b pb-8">
                                         <p class="">{{__("Colores")}}</p>
 
                                         <div class="flex flex-row items-end gap-1" aria-label="Colores disponibles">
@@ -290,7 +290,7 @@
         .product-color-swatch__label {
             position: absolute;
             z-index: 20;
-            bottom: calc(100% + 10px);
+            top: calc(100% + 8px);
             left: 50%;
             display: block;
             width: max-content;
@@ -307,7 +307,7 @@
             white-space: nowrap;
             pointer-events: none;
             opacity: 0;
-            transform: translate(-50%, 6px);
+            transform: translate(-50%, -6px);
             transition: opacity 160ms ease-out, transform 200ms cubic-bezier(0.22, 1, 0.36, 1);
         }
 
