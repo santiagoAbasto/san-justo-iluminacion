@@ -18,6 +18,9 @@ Route::permanentRedirect('/pedidos/login.php', 'https://proyecto4.ddns.net/proye
 // Redirecciones permanentes del sitio anterior.
 Route::permanentRedirect('/lineas-de-productos', '/productos');
 Route::permanentRedirect('/productos-colgantes', '/productos');
+Route::permanentRedirect('/productos-apliques', '/productos');
+Route::permanentRedirect('/luminarias-para-living', '/productos');
+Route::permanentRedirect('/luminarias-para-oficina', '/productos');
 Route::permanentRedirect('/productos-faroles-y-farolas', '/productos');
 Route::permanentRedirect('/productos-linea-bidireccionales', '/productos');
 Route::permanentRedirect('/catalogo-general-2023', '/calidad');
