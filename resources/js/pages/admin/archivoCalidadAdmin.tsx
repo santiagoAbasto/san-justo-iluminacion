@@ -21,13 +21,14 @@ export default function MarcasAdmin() {
 
         post(route('admin.archivos.store'), {
             preserveScroll: true,
+            forceFormData: true,
             onSuccess: () => {
                 toast.success('Archivo creada correctamente');
                 reset();
                 setCreateView(false);
             },
             onError: (errors) => {
-                toast.error('Error al crear archivo');
+                toast.error(Object.values(errors).flat().join(' ') || 'Error al crear archivo');
                 console.log(errors);
             },
         });
@@ -44,7 +45,7 @@ export default function MarcasAdmin() {
                             exit={{ opacity: 0 }}
                             className="fixed top-0 left-0 z-50 flex h-full w-full items-center justify-center bg-black/50 text-left"
                         >
-                            <form onSubmit={handleSubmit} method="POST" className="text-black">
+                            <form onSubmit={handleSubmit} method="POST" encType="multipart/form-data" className="text-black">
                                 <div className="w-[500px] rounded-md bg-white p-4">
                                     <h2 className="mb-4 text-2xl font-semibold">Cargar catalogo</h2>
                                     <div className="grid grid-cols-2 gap-4">

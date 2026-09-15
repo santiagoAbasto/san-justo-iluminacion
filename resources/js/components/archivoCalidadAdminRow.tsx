@@ -22,12 +22,13 @@ export default function ArchivoCalidadAdminRow({ archivo }) {
         e.preventDefault();
         updateForm.post(route('admin.archivos.update'), {
             preserveScroll: true,
+            forceFormData: true,
             onSuccess: () => {
                 toast.success('Catalogo actualizada correctamente');
                 setEdit(false);
             },
             onError: (errors) => {
-                toast.error('Error al actualizar catalogo');
+                toast.error(Object.values(errors).flat().join(' ') || 'Error al actualizar catálogo');
                 console.log(errors);
             },
         });
@@ -108,7 +109,7 @@ export default function ArchivoCalidadAdminRow({ archivo }) {
                         exit={{ opacity: 0 }}
                         className="fixed top-0 left-0 z-50 flex h-full w-full items-center justify-center bg-black/50 text-left"
                     >
-                        <form onSubmit={handleUpdate} method="POST" className="text-black">
+                        <form onSubmit={handleUpdate} method="POST" encType="multipart/form-data" className="text-black">
                             <div className="w-[500px] rounded-md bg-white p-4">
                                 <h2 className="mb-4 text-2xl font-semibold">Actualizar catalogo</h2>
                                 <div className="grid grid-cols-2 gap-4">
@@ -194,6 +195,15 @@ export default function ArchivoCalidadAdminRow({ archivo }) {
                                             </label>
                                             <p className="self-center px-2">{updateForm.data?.archivo?.name}</p>
                                         </div>
+                                        {updateForm.progress && (
+                                            <div className="h-2 w-full overflow-hidden rounded bg-gray-200" aria-label="Progreso de carga">
+                                                <div
+                                                    className="bg-primary-orange h-full transition-all duration-200"
+                                                    style={{ width: `${updateForm.progress.percentage}%` }}
+                                                />
+                                            </div>
+                                        )}
+                                        {updateForm.progress && <p className="text-sm text-gray-600">Subiendo archivo: {updateForm.progress.percentage}%</p>}
                                     </div>
 
                                     <div className="col-span-2 flex justify-end gap-4">
@@ -206,9 +216,10 @@ export default function ArchivoCalidadAdminRow({ archivo }) {
                                         </button>
                                         <button
                                             type="submit"
+                                            disabled={updateForm.processing}
                                             className="border-primary-orange text-primary-orange hover:bg-primary-orange rounded-md border px-2 py-1 transition duration-300 hover:text-white"
                                         >
-                                            Actualizar
+                                            {updateForm.processing ? 'Subiendo...' : 'Actualizar'}
                                         </button>
                                     </div>
                                 </div>
