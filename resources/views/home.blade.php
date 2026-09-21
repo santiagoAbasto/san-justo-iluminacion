@@ -59,8 +59,14 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            const completedFormKey = 'sanjusto_popup_form_completed_v1';
+
             function shouldShowDailyForm() {
-               
+                // El popup no vuelve a mostrarse cuando Bitrix24 confirma que esta
+                // persona completó el formulario. El dato queda en este navegador.
+                if (localStorage.getItem(completedFormKey) === 'true') {
+                    return false;
+                }
 
                 const lastVisit = localStorage.getItem('sanjusto_last_visit');
                 const today = new Date().toDateString();
@@ -119,6 +125,21 @@
 
                 modal.style.display = 'none';
             }
+
+            function markFormAsCompleted() {
+                localStorage.setItem(completedFormKey, 'true');
+                hideModal();
+            }
+
+            // Bitrix24 expone la instancia de la CRM form al inicializarla. El
+            // evento "complete" ocurre únicamente cuando el envío fue exitoso.
+            window.addEventListener('b24:form:init', function(event) {
+                const form = event.detail && event.detail.object;
+
+                if (form && typeof form.subscribe === 'function') {
+                    form.subscribe('complete', markFormAsCompleted);
+                }
+            }, { once: true });
 
             // Event listener para cerrar el modal
             const closeFormModal = document.getElementById('closeFormModal');
