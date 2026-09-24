@@ -1,7 +1,11 @@
 <div class="max-w-[1224px] mx-auto h-fit max-lg:min-h-0 gap-5 flex flex-col justify-center max-lg:py-4">
     <h2 class="text-[32px] font-semibold font-custom!">{{__("Descubrí nuestra línea de productos")}}</h2>
-    <form action="{{ route('productos') }}" method="GET"
+    <form id="product-filter-form" action="{{ route('productos') }}" method="GET"
         class="flex flex-col lg:flex-row gap-6 max-sm:gap-4 w-[1224px] max-xl:w-full max-xl:px-6 max-lg:px-4 max-sm:px-4 mx-auto h-auto items-start lg:items-center">
+
+        @if(request()->filled('lang'))
+            <input type="hidden" name="lang" value="{{ request('lang') }}">
+        @endif
 
         <!-- Sección: Por vehículo / Código -->
         <div class="flex flex-col w-full gap-4 max-sm:gap-3">
@@ -159,109 +163,12 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        const espacioSelect = document.getElementById('espacio');
-        const usoSelect = document.getElementById('uso');
-        const lineaSelect = document.getElementById('linea');
-        const ambienteSelect = document.getElementById('ambiente');
-        const currentLang = '{{ request("lang", "es") }}';
+        const form = document.getElementById('product-filter-form');
 
-        // Función para actualizar las opciones de un select
-        function updateSelectOptions(selectElement, data, selectedValue = '', defaultText = '') {
-            selectElement.innerHTML = `<option value="">${defaultText}</option>`;
-
-            data.forEach(item => {
-                const text = currentLang === 'en' && item.name_en ? item.name_en : item.name_es;
-                const option = new Option(text, item.id);
-                if (item.id == selectedValue) {
-                    option.selected = true;
-                }
-                selectElement.add(option);
+        ['espacio', 'uso', 'linea', 'ambiente'].forEach(function (id) {
+            document.getElementById(id)?.addEventListener('change', function () {
+                form.requestSubmit();
             });
-        }
-
-        // Función para mostrar estado de carga
-        function showLoading(selectElement, text) {
-            selectElement.innerHTML = `<option value="">${text}...</option>`;
-            selectElement.disabled = true;
-        }
-
-        // Función para habilitar select
-        function enableSelect(selectElement) {
-            selectElement.disabled = false;
-        }
-
-        // Manejar cambio en Espacio
-        espacioSelect.addEventListener('change', function () {
-            const espacioId = this.value;
-            const currentUso = '{{ $uso ?? "" }}';
-
-            if (espacioId) {
-                showLoading(usoSelect, 'Cargando usos');
-
-                fetch(`{{ route('api.usos.by.espacio') }}?espacio_id=${espacioId}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        updateSelectOptions(usoSelect, data, currentUso, 'Elegir uso');
-                        enableSelect(usoSelect);
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                        usoSelect.innerHTML = '<option value="">Error al cargar usos</option>';
-                        enableSelect(usoSelect);
-                    });
-            } else {
-                // Si no hay espacio seleccionado, cargar todos los usos
-                showLoading(usoSelect, 'Cargando usos');
-
-                fetch(`{{ route('api.usos.by.espacio') }}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        updateSelectOptions(usoSelect, data, '', 'Elegir uso');
-                        enableSelect(usoSelect);
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                        usoSelect.innerHTML = '<option value="">Error al cargar usos</option>';
-                        enableSelect(usoSelect);
-                    });
-            }
-        });
-
-        // Manejar cambio en Línea
-        lineaSelect.addEventListener('change', function () {
-            const lineaId = this.value;
-            const currentAmbiente = '{{ $ambiente ?? "" }}';
-
-            if (lineaId) {
-                showLoading(ambienteSelect, 'Cargando ambientes');
-
-                fetch(`{{ route('api.ambientes.by.linea') }}?linea_id=${lineaId}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        updateSelectOptions(ambienteSelect, data, currentAmbiente, 'Elegir ambiente');
-                        enableSelect(ambienteSelect);
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                        ambienteSelect.innerHTML = '<option value="">Error al cargar ambientes</option>';
-                        enableSelect(ambienteSelect);
-                    });
-            } else {
-                // Si no hay línea seleccionada, cargar todos los ambientes
-                showLoading(ambienteSelect, 'Cargando ambientes');
-
-                fetch(`{{ route('api.ambientes.by.linea') }}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        updateSelectOptions(ambienteSelect, data, '', 'Elegir ambiente');
-                        enableSelect(ambienteSelect);
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                        ambienteSelect.innerHTML = '<option value="">Error al cargar ambientes</option>';
-                        enableSelect(ambienteSelect);
-                    });
-            }
         });
     });
 </script>

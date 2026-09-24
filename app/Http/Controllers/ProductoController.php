@@ -21,6 +21,7 @@ use App\Models\SubProducto;
 use App\Models\Uso;
 use Illuminate\Support\Facades\Auth;
 use Gloudemans\Shoppingcart\Facades\Cart;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -69,68 +70,47 @@ class ProductoController extends Controller
     {
         $metadatos = Metadatos::where('title', 'Productos')->orderBy('id')->first();
 
-        // Construir query base para productos
-        $query = Producto::query();
-
-        // Filtro por categoría (a través de marcas)
-        if ($request->filled('espacio')) {
-            $query->where('espacio_id', $request->espacio);
-        }
-
-        // Filtro por modelo/subcategoría
-        if ($request->filled('uso')) {
-            $query->where('uso_id', $request->uso);
-        }
-
-        if ($request->filled('linea')) {
-            $query->where('linea_id', $request->linea);
-        }
-
-        // Filtro por código
-        if ($request->filled('code')) {
-            $query->where('code', 'LIKE', '%' . $request->code . '%');
-        }
-
-        // Filtro por código OEM
-        if ($request->filled('ambiente')) {
-            $query->whereHas('ambientes', function ($q) use ($request) {
-                $q->where('ambiente_id', $request->ambiente);
-            });
-        }
-
-        // Aplicar ordenamiento por defecto
-        $query->orderBy('order', 'asc');
-
-        // Ejecutar query con paginación
-        $productos = $query
+        $productos = $this->publicProductQuery($request)
+            ->with('imagenes')
+            ->orderBy('order', 'asc')
+            ->orderBy('id', 'asc')
             ->paginate(16)
             ->appends($request->query());
 
-        // Cargar datos para los filtros
-        $espacios = Espacio::orderBy('order', 'asc')->get();
-        $lineas = Linea::orderBy('order', 'asc')->get();
+        // Cada opción se calcula contra los demás filtros activos. De esta
+        // forma el usuario nunca puede elegir una combinación sin productos.
+        $espacioIds = $this->publicProductQuery($request, 'espacio')
+            ->whereNotNull('espacio_id')
+            ->distinct()
+            ->pluck('espacio_id');
 
-        // Cargar usos según el espacio seleccionado
-        if ($request->filled('espacio')) {
-            $usos = Uso::where('espacio_id', $request->espacio)
-                ->orderBy('order', 'asc')
-                ->get();
-        } else {
-            $usos = Uso::orderBy('order', 'asc')->get();
-        }
+        $usoIds = $this->publicProductQuery($request, 'uso')
+            ->whereNotNull('uso_id')
+            ->distinct()
+            ->pluck('uso_id');
 
-        // Cargar ambientes según la línea seleccionada
-        if ($request->filled('linea')) {
-            $linea = Linea::find($request->linea);
-            $ambientes = $linea ? $linea->ambientes()->orderBy('order', 'asc')->get() : collect();
-        } else {
-            $ambientes = Ambiente::orderBy('order', 'asc')->get();
-        }
+        $lineaIds = $this->publicProductQuery($request, 'linea')
+            ->whereNotNull('linea_id')
+            ->distinct()
+            ->pluck('linea_id');
+
+        $productosParaAmbientes = $this->publicProductQuery($request, 'ambiente')
+            ->select('productos.id');
+
+        $ambienteIds = DB::table('producto_ambientes')
+            ->whereIn('producto_id', $productosParaAmbientes)
+            ->distinct()
+            ->pluck('ambiente_id');
+
+        $espaciosDisponibles = Espacio::whereIn('id', $espacioIds)->orderBy('order', 'asc')->get();
+        $usos = Uso::whereIn('id', $usoIds)->orderBy('order', 'asc')->get();
+        $lineas = Linea::whereIn('id', $lineaIds)->orderBy('order', 'asc')->get();
+        $ambientes = Ambiente::whereIn('id', $ambienteIds)->orderBy('order', 'asc')->get();
 
         return view('productos', [
             'metadatos' => $metadatos,
             'productos' => $productos,
-            'espacios' => $espacios,
+            'espaciosDisponibles' => $espaciosDisponibles,
             'espacio' => $request->espacio,
             'uso' => $request->uso,
             'linea' => $request->linea,
@@ -140,6 +120,28 @@ class ProductoController extends Controller
             'lineas' => $lineas,
             'ambientes' => $ambientes,
         ]);
+    }
+
+    private function publicProductQuery(Request $request, ?string $except = null): Builder
+    {
+        return Producto::query()
+            ->when($except !== 'espacio' && $request->filled('espacio'), function (Builder $query) use ($request) {
+                $query->where('espacio_id', $request->input('espacio'));
+            })
+            ->when($except !== 'uso' && $request->filled('uso'), function (Builder $query) use ($request) {
+                $query->where('uso_id', $request->input('uso'));
+            })
+            ->when($except !== 'linea' && $request->filled('linea'), function (Builder $query) use ($request) {
+                $query->where('linea_id', $request->input('linea'));
+            })
+            ->when($except !== 'code' && $request->filled('code'), function (Builder $query) use ($request) {
+                $query->where('code', 'LIKE', '%' . $request->input('code') . '%');
+            })
+            ->when($except !== 'ambiente' && $request->filled('ambiente'), function (Builder $query) use ($request) {
+                $query->whereHas('ambientes', function (Builder $ambientes) use ($request) {
+                    $ambientes->where('ambientes.id', $request->input('ambiente'));
+                });
+            });
     }
 
     // Agregar estos métodos para las llamadas AJAX
@@ -176,15 +178,30 @@ class ProductoController extends Controller
             ->header('X-Robots-Tag', 'noindex, nofollow, noarchive');
     }
 
-    public function show($codigo, Request $request)
+    public function show($codigo)
+    {
+        return $this->renderPublicProduct($codigo);
+    }
+
+    public function showExact($codigo, int $productoId)
+    {
+        return $this->renderPublicProduct($codigo, $productoId);
+    }
+
+    private function renderPublicProduct($codigo, ?int $productoId = null)
     {
         $producto = Producto::with(['imagenes', 'colores', 'linea'])
             ->where('code', $codigo)
+            ->when($productoId, function (Builder $query) use ($productoId) {
+                $query->whereKey($productoId);
+            })
+            ->orderBy('id', 'asc')
             ->firstOrFail();
     
         Log::info('Mostrando producto con código: ', [$producto]);
     
-        $productosRelacionados = Producto::where('id', '!=', $producto->id)
+        $productosRelacionados = Producto::with('imagenes')
+            ->where('id', '!=', $producto->id)
             ->where('linea_id', $producto->linea_id)
             ->orderBy('order', 'asc')
             ->limit(4)

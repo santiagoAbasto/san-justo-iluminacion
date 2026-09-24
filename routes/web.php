@@ -84,6 +84,10 @@ Route::middleware(['LocaleMiddleware'])->group(function () {
     Route::get('/productos', [ProductoController::class, 'indexVistaPrevia'])
         ->name('productos');
 
+    Route::get('/productos/{id}/{productoId}', [ProductoController::class, 'showExact'])
+        ->whereNumber('productoId')
+        ->name('producto.show.exact');
+
     Route::get('/productos/{id}', [ProductoController::class, 'show'])
         ->name('producto.show');
 

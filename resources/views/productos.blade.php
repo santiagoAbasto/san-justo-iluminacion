@@ -17,7 +17,7 @@
     <div class="flex flex-col gap-10 max-lg:gap-8 max-md:gap-6 max-sm:gap-6 py-20 max-lg:py-16 max-md:py-14 max-sm:py-12">
 
         <!-- Search bar component -->
-        <x-search-bar :espacios="$espacios" :lineas="$lineas" :usos="$usos" :ambientes="$ambientes" :espacio="$espacio"
+        <x-search-bar :espacios="$espaciosDisponibles" :lineas="$lineas" :usos="$usos" :ambientes="$ambientes" :espacio="$espacio"
             :linea="$linea" :ambiente="$ambiente" :uso="$uso" :code="$code" />
 
         <!-- Main content with sidebar and products -->
@@ -32,14 +32,14 @@
                 <div
                     class="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4 max-lg:grid-cols-3 max-md:grid-cols-2 max-sm:grid-cols-1 gap-6 max-lg:gap-5 max-md:gap-4 max-sm:gap-4">
                     @forelse($productos as $producto)
-                        <a href="{{ "/productos/" . $producto->code }}"
+                        <a href="{{ route('producto.show.exact', ['id' => $producto->code, 'productoId' => $producto->id]) }}"
                             class="min-h-[332px] max-lg:min-h-[300px] max-md:min-h-[280px] max-sm:min-h-[250px] flex flex-col w-full max-w-[288px] max-lg:max-w-full mx-auto max-sm:mx-0 rounded-sm border-[#DEDFE0] hover:shadow-md transition-shadow duration-300 bg-white overflow-hidden group">
                             <div class="h-full flex flex-col">
                                 @if ($producto->imagenes->count() > 0)
                                     <div
                                         class="relative min-h-[287px] max-lg:min-h-[250px] max-md:min-h-[220px] max-sm:h-[200px] overflow-hidden">
                                         <img src="{{ $producto->imagenes->first()->image}}" alt="{{ $producto->name }}"
-                                            class="w-full h-full object-cover rounded-t-sm group-hover:scale-105 transition-transform duration-300"
+                                            class="w-full h-full object-contain bg-white rounded-t-sm group-hover:scale-105 transition-transform duration-300"
                                             onerror="this.onerror=null; this.src='{{$logos->logo_secundario}}'; this.classList.remove('object-cover'); this.classList.add('object-contain', 'p-4', 'bg-gray-50');">
                                         <h2
                                             class="absolute left-3 bottom-2 text-[14px] max-md:text-[13px] max-sm:text-[12px] font-semibold uppercase text-primary-orange bg-white/90 px-2 py-1 rounded max-sm:left-2 max-sm:bottom-1">

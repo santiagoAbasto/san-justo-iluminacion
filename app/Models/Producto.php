@@ -10,7 +10,9 @@ class Producto extends Model
 
     public function imagenes()
     {
-        return $this->hasMany(ImagenProducto::class, 'producto_id');
+        return $this->hasMany(ImagenProducto::class, 'producto_id')
+            ->orderBy('order')
+            ->orderBy('id');
     }
 
     public function getImageAttribute($value)

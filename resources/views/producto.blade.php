@@ -52,9 +52,9 @@
                         <!-- Main Image -->
                         <div class="flex items-center w-full justify-center h-[544px] max-sm:h-[300px] border rounded-sm">
                             @if ($producto->imagenes->first())
-                                <img id="mainImage" class="rounded-sm w-full h-full object-cover" src="{{ $producto->imagenes->first()->image }}"
+                                <img id="mainImage" src="{{ $producto->imagenes->first()->image }}"
                                     alt="{{ $producto->name }}" 
-                                    class="w-full h-full object-cover object-center transition-opacity duration-300 ease-in-out" onerror="this.onerror=null; this.src='{{$logos->logo_secundario}}'; this.classList.remove('object-cover'); this.classList.add('object-contain', 'p-4', 'bg-gray-50');">
+                                    class="rounded-sm w-full h-full object-contain object-center bg-white transition-opacity duration-300 ease-in-out" onerror="this.onerror=null; this.src='{{$logos->logo_secundario}}'; this.classList.remove('object-cover'); this.classList.add('object-contain', 'p-4', 'bg-gray-50');">
                             @else
                                 <div
                                     class="w-full h-full bg-gray-100 text-gray-400 flex items-center justify-center transition-opacity duration-300 ease-in-out">
@@ -187,13 +187,13 @@
 
                     <div class="grid grid-cols-1 md:grid-cols-4 gap-6 max-sm:grid-cols-1 max-sm:gap-4">
                         @forelse($productosRelacionados as $prodRelacionado)
-                            <a href="{{ "/productos/" . $prodRelacionado->code }}"
+                            <a href="{{ route('producto.show.exact', ['id' => $prodRelacionado->code, 'productoId' => $prodRelacionado->id]) }}"
                             class="min-h-[332px] max-lg:min-h-[300px] max-md:min-h-[280px] max-sm:min-h-[250px] flex flex-col w-full max-w-[288px] max-lg:max-w-full mx-auto max-sm:mx-0 rounded-sm border-[#DEDFE0] hover:shadow-md transition-shadow duration-300 bg-white overflow-hidden group">
                             <div class="h-full flex flex-col">
                                 @if ($prodRelacionado->imagenes->count() > 0)
                                     <div class="relative min-h-[287px] max-lg:min-h-[250px] max-md:min-h-[220px] max-sm:h-[200px] overflow-hidden">
                                         <img src="{{ $prodRelacionado->imagenes->first()->image}}" onerror="this.onerror=null; this.src='{{$logos->logo_secundario}}'; this.classList.remove('object-cover'); this.classList.add('object-contain', 'p-4', 'bg-gray-50');" alt="{{ $prodRelacionado->name }}"
-                                            class="w-full h-full object-cover rounded-t-sm group-hover:scale-105 transition-transform duration-300">
+                                            class="w-full h-full object-contain bg-white rounded-t-sm group-hover:scale-105 transition-transform duration-300">
                                         <h2 class="absolute left-3 bottom-2 text-[14px] max-md:text-[13px] max-sm:text-[12px] font-semibold uppercase text-primary-orange bg-white/90 px-2 py-1 rounded max-sm:left-2 max-sm:bottom-1">
                                             {{$prodRelacionado->categoria->name ?? ''}}
                                         </h2>
