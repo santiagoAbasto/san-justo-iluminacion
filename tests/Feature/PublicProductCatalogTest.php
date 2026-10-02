@@ -7,6 +7,9 @@ use App\Models\Linea;
 use App\Models\Logos;
 use App\Models\Producto;
 use App\Models\Uso;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+
+uses(RefreshDatabase::class);
 
 beforeEach(function () {
     Logos::create([
@@ -59,6 +62,17 @@ test('product filters only offer combinations that still have results', function
     $response->assertViewHas('lineas', fn ($lineas) => $lineas->modelKeys() === [$ecoGonnet->id]);
     $response->assertViewHas('ambientes', fn ($ambientes) => $ambientes->modelKeys() === [$jardin->id]);
     $response->assertViewHas('usos', fn ($usos) => $usos->modelKeys() === [$faroles->id]);
+    $response->assertViewHas('espaciosDisponibles', fn ($espacios) => $espacios->modelKeys() === [$exterior->id]);
+
+    // Validar el select renderizado: el composer global también comparte espacios.
+    $document = new DOMDocument();
+    @$document->loadHTML('<?xml encoding="UTF-8">'.$response->getContent());
+    $options = (new DOMXPath($document))->query('//select[@id="espacio"]/option');
+    $spaceValues = [];
+    foreach ($options as $option) {
+        $spaceValues[] = $option->getAttribute('value');
+    }
+    expect($spaceValues)->toBe(['', (string) $exterior->id]);
     $response->assertSee(route('producto.show.exact', [
         'id' => $productoExterior->code,
         'productoId' => $productoExterior->id,

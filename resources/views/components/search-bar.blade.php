@@ -20,7 +20,7 @@
                             class="rounded-sm bg-white p-2 pr-10 focus:outline focus:outline-primary-orange transition duration-300 w-full text-sm max-sm:text-xs outline outline-gray-300"
                             name="espacio" id="espacio">
                             <option value="">{{(__("Elegir espacio"))}}</option>
-                            @foreach ($espacios as $espacioItem)
+                            @foreach ($espaciosDisponibles as $espacioItem)
                                 <option value="{{ $espacioItem->id }}" {{ ($espacio ?? '') == $espacioItem->id ? 'selected' : '' }}>
                                     {{ request('lang') == 'en' ? $espacioItem->name_en : $espacioItem->name_es }}
                                 </option>
@@ -162,13 +162,44 @@
 </div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
+    (function () {
         const form = document.getElementById('product-filter-form');
+        const button = form.querySelector('button[type="submit"]');
+        const buttonText = button.textContent;
+        let submitting = false;
+        let recoveryTimer;
+
+        function resetSubmission() {
+            window.clearTimeout(recoveryTimer);
+            submitting = false;
+            form.removeAttribute('aria-busy');
+            form.style.pointerEvents = '';
+            button.disabled = false;
+            button.textContent = buttonText;
+        }
+
+        form.addEventListener('submit', function (event) {
+            if (submitting) {
+                event.preventDefault();
+                return;
+            }
+
+            submitting = true;
+            form.setAttribute('aria-busy', 'true');
+            button.textContent = @json(__('Buscando…'));
+            button.disabled = true;
+            // Conservar los campos habilitados para incluirlos en el GET.
+            form.style.pointerEvents = 'none';
+            // Esc/Stop no dispara pageshow: permitir reintentar si se cancela la carga.
+            recoveryTimer = window.setTimeout(resetSubmission, 15000);
+        });
+
+        window.addEventListener('pageshow', resetSubmission);
 
         ['espacio', 'uso', 'linea', 'ambiente'].forEach(function (id) {
-            document.getElementById(id)?.addEventListener('change', function () {
+            form.querySelector('#' + id).addEventListener('change', function () {
                 form.requestSubmit();
             });
         });
-    });
+    })();
 </script>

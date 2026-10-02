@@ -81,26 +81,22 @@ class ProductoController extends Controller
         // forma el usuario nunca puede elegir una combinación sin productos.
         $espacioIds = $this->publicProductQuery($request, 'espacio')
             ->whereNotNull('espacio_id')
-            ->distinct()
-            ->pluck('espacio_id');
+            ->select('espacio_id');
 
         $usoIds = $this->publicProductQuery($request, 'uso')
             ->whereNotNull('uso_id')
-            ->distinct()
-            ->pluck('uso_id');
+            ->select('uso_id');
 
         $lineaIds = $this->publicProductQuery($request, 'linea')
             ->whereNotNull('linea_id')
-            ->distinct()
-            ->pluck('linea_id');
+            ->select('linea_id');
 
         $productosParaAmbientes = $this->publicProductQuery($request, 'ambiente')
             ->select('productos.id');
 
         $ambienteIds = DB::table('producto_ambientes')
             ->whereIn('producto_id', $productosParaAmbientes)
-            ->distinct()
-            ->pluck('ambiente_id');
+            ->select('ambiente_id');
 
         $espaciosDisponibles = Espacio::whereIn('id', $espacioIds)->orderBy('order', 'asc')->get();
         $usos = Uso::whereIn('id', $usoIds)->orderBy('order', 'asc')->get();

@@ -17,7 +17,7 @@
     <div class="flex flex-col gap-10 max-lg:gap-8 max-md:gap-6 max-sm:gap-6 py-20 max-lg:py-16 max-md:py-14 max-sm:py-12">
 
         <!-- Search bar component -->
-        <x-search-bar :espacios="$espaciosDisponibles" :lineas="$lineas" :usos="$usos" :ambientes="$ambientes" :espacio="$espacio"
+        <x-search-bar :espacios-disponibles="$espaciosDisponibles" :lineas="$lineas" :usos="$usos" :ambientes="$ambientes" :espacio="$espacio"
             :linea="$linea" :ambiente="$ambiente" :uso="$uso" :code="$code" />
 
         <!-- Main content with sidebar and products -->
@@ -38,7 +38,8 @@
                                 @if ($producto->imagenes->count() > 0)
                                     <div
                                         class="relative min-h-[287px] max-lg:min-h-[250px] max-md:min-h-[220px] max-sm:h-[200px] overflow-hidden">
-                                        <img src="{{ $producto->imagenes->first()->image}}" alt="{{ $producto->name }}"
+                                        <img src="{{ $producto->imagenes->first()->catalog_thumbnail }}" alt="{{ $producto->name }}"
+                                            loading="{{ $loop->index < 4 ? 'eager' : 'lazy' }}" decoding="async"
                                             class="w-full h-full object-contain bg-white rounded-t-sm group-hover:scale-105 transition-transform duration-300"
                                             onerror="this.onerror=null; this.src='{{$logos->logo_secundario}}'; this.classList.remove('object-cover'); this.classList.add('object-contain', 'p-4', 'bg-gray-50');">
                                         <h2
@@ -50,6 +51,7 @@
                                     <div
                                         class="relative min-h-[287px] max-lg:min-h-[250px] max-md:min-h-[220px] max-sm:h-[200px] bg-gray-50 flex items-center justify-center overflow-hidden">
                                         <img src="{{$logos->logo_principal}}" alt="{{ $producto->name }}"
+                                            loading="{{ $loop->index < 4 ? 'eager' : 'lazy' }}" decoding="async"
                                             class="w-full h-full object-contain rounded-t-sm p-4 max-sm:p-3 group-hover:scale-105 transition-transform duration-300">
                                         <h2
                                             class="absolute left-3 bottom-2 text-[14px] max-md:text-[13px] max-sm:text-[12px] font-semibold uppercase text-primary-orange bg-white/90 px-2 py-1 rounded max-sm:left-2 max-sm:bottom-1">

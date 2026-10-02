@@ -167,6 +167,10 @@
         const emailInput = document.getElementById('Email');
         const submitButton = document.getElementById('newsletter-btn');
 
+        if (!form || !successMessage || !errorMessage || !errorMessageText || !emailInput || !submitButton) {
+            return;
+        }
+
         // Función para ocultar todos los mensajes
         function hideMessages() {
             successMessage.classList.add('hidden');
