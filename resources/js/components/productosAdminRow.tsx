@@ -158,7 +158,7 @@ export default function ProductosAdminRow({ producto }) {
     }, [edit, producto?.id]);
 
     const handleFileChange = (e) => {
-        const files = Array.from(e.target.files);
+        const files = Array.from(e.target.files || []) as File[];
 
         // Actualizar el form data con los archivos nuevos
         setData('new_images', files);

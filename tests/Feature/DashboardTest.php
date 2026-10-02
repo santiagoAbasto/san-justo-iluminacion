@@ -13,3 +13,9 @@ test('authenticated users can visit the dashboard', function () {
 
     $this->get('/dashboard')->assertOk();
 });
+
+test('legacy accounts do not gain a new mandatory email verification requirement', function () {
+    $user = User::factory()->unverified()->create(['autorizado' => true]);
+
+    $this->actingAs($user)->get('/dashboard')->assertOk();
+});

@@ -4,7 +4,7 @@ import { useForm, usePage } from '@inertiajs/react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
-import UserSwitch from './switch';
+import UserSwitch from './Switch';
 
 export default function VendedoresAdminRow({ vendedor }) {
     const [edit, setEdit] = useState(false);

@@ -153,7 +153,7 @@ export default function ProductosPrivada({ categorias, subcategorias }) {
                                 key={producto?.id}
                                 producto={producto}
                                 margenSwitch={margenSwitch}
-                                margen={localStorage.getItem('margen') || 0}
+                                margen={Number(localStorage.getItem('margen')) || 0}
                             />
                         ))}
                     </div>

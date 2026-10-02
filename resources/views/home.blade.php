@@ -6,6 +6,7 @@
 @section('keywords', $metadatos->keywords ?? '')
 
 @section('content')
+    @if ($homeInfo)
     <x-banner-portada :homeInfo="$homeInfo" />
     <x-espacios :espaciosHome="$espaciosHome" :titulo="collect($titulos)->firstWhere('seccion', 'espacios')" />
     <x-seccion-uno :homeInfo="$homeInfo" />
@@ -166,4 +167,9 @@
         });
     </script>
 
+    @else
+        <main class="mx-auto flex min-h-[320px] max-w-[1200px] items-center justify-center px-4 text-center">
+            <p class="text-gray-600">El contenido de la portada se publicará próximamente.</p>
+        </main>
+    @endif
 @endsection

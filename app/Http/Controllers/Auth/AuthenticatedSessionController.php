@@ -5,9 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-use Inertia\Response;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -29,11 +27,13 @@ class AuthenticatedSessionController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'usuario' => 'required', // Campo que puede ser name o email
+            'usuario' => 'required_without_all:name,email',
+            'name' => 'required_without_all:usuario,email',
+            'email' => 'required_without_all:usuario,name|email',
             'password' => 'required',
         ]);
 
-        $login = $request->input('usuario');
+        $login = $request->input('usuario') ?? $request->input('name') ?? $request->input('email');
         $password = $request->input('password');
 
         // Determinar si es email o name
@@ -47,6 +47,7 @@ class AuthenticatedSessionController extends Controller
 
         if (Auth::guard()->attempt($credentials)) {
             $request->session()->regenerate();
+
             return redirect()->intended('/privada/productos');
         }
 

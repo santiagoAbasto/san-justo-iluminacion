@@ -78,7 +78,8 @@ export default function ListaDePreciosRow({ lista }) {
             });
 
             // Create a link element to trigger the download
-            const fileType = response.headers['content-type'] || 'application/octet-stream';
+            const contentType = response.headers['content-type'];
+            const fileType = typeof contentType === 'string' ? contentType : 'application/octet-stream';
             const blob = new Blob([response.data], { type: fileType });
             const url = window.URL.createObjectURL(blob);
 

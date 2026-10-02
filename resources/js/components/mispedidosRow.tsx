@@ -17,7 +17,7 @@ export default function MispedidosRow({ pedido }) {
                     toast.success('Productos añadidos al carrito');
                 },
                 onError: (error) => {
-                    toast.error(error.response.data.message || 'Error al añadir productos al carrito');
+                    toast.error(typeof error === 'string' ? error : 'Error al añadir productos al carrito');
                 },
             },
         );

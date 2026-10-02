@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 /* import defaultPhoto from '../../images/defaultPhoto.png'; */
 
-export default function ProductosPrivadaRow({ producto, margenSwitch, margen }) {
+export default function ProductosPrivadaRow({ producto, margenSwitch = false, margen = 0 }) {
     const { auth, ziggy, margenes } = usePage().props;
     const { user } = auth;
 

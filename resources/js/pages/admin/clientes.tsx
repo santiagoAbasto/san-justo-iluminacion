@@ -47,7 +47,7 @@ export default function Clientes() {
     const [searchTerm, setSearchTerm] = useState('');
     const [createView, setCreateView] = useState(false);
     const [subirView, setSubirView] = useState(false);
-    const [archivo, setArchivo] = useState();
+    const [archivo, setArchivo] = useState<File | undefined>();
 
     // Manejadores para la paginación del backend
     const handlePageChange = (page) => {

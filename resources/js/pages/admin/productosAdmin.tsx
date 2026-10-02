@@ -35,11 +35,11 @@ export default function ProductosAdmin() {
     const [searchTerm, setSearchTerm] = useState('');
     const [createView, setCreateView] = useState(false);
     const [subirProductos, setSubirProductos] = useState(false);
-    const [archivo, setArchivo] = useState();
+    const [archivo, setArchivo] = useState<File | undefined>();
 
     const [imagePreviews, setImagePreviews] = useState([]);
-    const [ambienteSelected, setAmbienteSelected] = useState([]);
-    const [colorSelected, setColorSelected] = useState([]);
+    const [ambienteSelected, setAmbienteSelected] = useState<any[]>([]);
+    const [colorSelected, setColorSelected] = useState<any[]>([]);
 
     useEffect(() => {
         setData(
@@ -62,7 +62,7 @@ export default function ProductosAdmin() {
     }, [data.linea_id]);
 
     const handleFileChange = (e) => {
-        const files = Array.from(e.target.files);
+        const files = Array.from(e.target.files || []) as File[];
 
         // Actualizar el form data con los archivos
         setData('images', files);
@@ -262,12 +262,12 @@ export default function ProductosAdmin() {
                                                 label: color.name,
                                                 hex: color.hex, // Incluimos el hex en la opción
                                             }))}
-                                            onChange={(options) => setColorSelected(options)}
+                                            onChange={(options) => setColorSelected(options ? [...options] : [])}
                                             className=""
                                             name="color"
                                             id="color"
                                             isMulti
-                                            formatOptionLabel={(option) => (
+                                            formatOptionLabel={(option: any) => (
                                                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                                                     <div
                                                         style={{
@@ -342,7 +342,7 @@ export default function ProductosAdmin() {
                                         <Select
                                             options={availableAmbientes}
                                             value={ambienteSelected}
-                                            onChange={(options) => setAmbienteSelected(options || [])}
+                                            onChange={(options) => setAmbienteSelected(options ? [...options] : [])}
                                             className=""
                                             name="subcategoria"
                                             id="subcategoria"

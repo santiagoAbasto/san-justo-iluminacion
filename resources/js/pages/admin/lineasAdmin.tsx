@@ -9,8 +9,8 @@ import Dashboard from './dashboard';
 
 export default function LineasAdmin() {
     const { lineas, ambientes } = usePage().props;
-    const uniqueAmbientes = Array.from(
-        new Map((ambientes || []).map((ambiente) => [ambiente?.id, ambiente])).values(),
+    const uniqueAmbientes: any[] = Array.from(
+        new Map<any, any>((ambientes || []).map((ambiente) => [ambiente?.id, ambiente])).values(),
     );
 
     const { data, setData, post, reset } = useForm({
@@ -22,7 +22,7 @@ export default function LineasAdmin() {
     const [createView, setCreateView] = useState(false);
     const [text_es, setTextEs] = useState('');
     const [text_en, setTextEn] = useState('');
-    const [ambienteSelected, setAmbienteSelected] = useState([]);
+    const [ambienteSelected, setAmbienteSelected] = useState<any[]>([]);
 
     useEffect(() => {
         setData(
@@ -154,7 +154,7 @@ export default function LineasAdmin() {
                                                 value: ambiente.id,
                                                 label: ambiente.name_es,
                                             }))}
-                                            onChange={(options) => setAmbienteSelected(options)}
+                                            onChange={(options) => setAmbienteSelected(options ? [...options] : [])}
                                             className=""
                                             name="subcategoria"
                                             id="subcategoria"

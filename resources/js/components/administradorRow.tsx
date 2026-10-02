@@ -23,7 +23,7 @@ export default function AdministradorRow({ adminObject }) {
         ev.preventDefault();
         
         // Crear un objeto con solo los datos que queremos enviar
-        const dataToSend = {
+        const dataToSend: { name: string; password?: string; password_confirmation?: string } = {
             name: updateForm.data.name
         };
         

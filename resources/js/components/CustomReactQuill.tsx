@@ -44,16 +44,16 @@ function CustomReactQuill({ value, onChange, additionalStyles = '' }) {
                 value={value}
                 onChange={onChange}
             />
-            <style jsx>{`
-                .quill-wrapper :global(.ql-container) {
+            <style>{`
+                .quill-wrapper .ql-container {
                     background-color: white;
                 }
 
-                .quill-wrapper :global(.ql-editor) {
+                .quill-wrapper .ql-editor {
                     background-color: white;
                 }
 
-                .quill-wrapper :global(.ql-toolbar) {
+                .quill-wrapper .ql-toolbar {
                     background-color: white;
                 }
             `}</style>

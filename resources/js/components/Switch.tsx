@@ -16,16 +16,12 @@ export default function Switch({ status = false, routeName = '', id }) {
         <div className="flex w-full items-center justify-center">
             <button
                 onClick={handleChange}
-                className={`relative flex h-6 w-12 cursor-pointer items-center rounded-full p-1 transition-colors duration-300 ${
-                    checked ? 'bg-blue-500' : 'bg-gray-300'
-                }`}
+                className={`relative flex h-6 w-12 cursor-pointer items-center rounded-full p-1 transition-colors duration-300 ${checked ? 'bg-blue-500' : 'bg-gray-300'}`}
                 aria-checked={checked}
                 role="switch"
             >
                 <span
-                    className={`absolute h-5 w-5 transform rounded-full bg-white shadow-md transition-transform duration-300 ${
-                        checked ? 'translate-x-5' : 'translate-x-0'
-                    }`}
+                    className={`absolute h-5 w-5 transform rounded-full bg-white shadow-md transition-transform duration-300 ${checked ? 'translate-x-5' : 'translate-x-0'}`}
                 />
             </button>
         </div>

@@ -1,8 +1,9 @@
 <?php
 
 use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
-uses(\Illuminate\Foundation\Testing\RefreshDatabase::class);
+uses(RefreshDatabase::class);
 
 test('login screen can be rendered', function () {
     $response = $this->get('/login');
@@ -11,24 +12,47 @@ test('login screen can be rendered', function () {
 });
 
 test('users can authenticate using the login screen', function () {
-    $user = User::factory()->create();
+    $user = User::factory()->create(['autorizado' => true]);
 
     $response = $this->post('/login', [
-        'email' => $user->email,
+        'name' => $user->name,
         'password' => 'password',
     ]);
 
     $this->assertAuthenticated();
-    $response->assertRedirect(route('dashboard', absolute: false));
+    $response->assertRedirect('/privada/productos');
 });
 
 test('users can not authenticate with invalid password', function () {
-    $user = User::factory()->create();
+    $user = User::factory()->create(['autorizado' => true]);
 
     $this->post('/login', [
-        'email' => $user->email,
+        'name' => $user->name,
         'password' => 'wrong-password',
     ]);
+
+    $this->assertGuest();
+});
+
+test('authorized legacy users can authenticate with a username or email', function (string $field) {
+    $user = User::factory()->unverified()->create(['autorizado' => true]);
+
+    $response = $this->post('/login', [
+        $field => $field === 'email' ? $user->email : $user->name,
+        'password' => 'password',
+    ]);
+
+    $this->assertAuthenticatedAs($user);
+    $response->assertRedirect('/privada/productos');
+})->with(['usuario', 'name', 'email']);
+
+test('accounts awaiting authorization cannot authenticate', function () {
+    $user = User::factory()->create(['autorizado' => false]);
+
+    $this->post('/login', [
+        'usuario' => $user->name,
+        'password' => 'password',
+    ])->assertSessionHasErrors('login');
 
     $this->assertGuest();
 });

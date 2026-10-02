@@ -8,7 +8,7 @@ import Dashboard from './dashboard';
 export default function PuntosVenta() {
     const { puntosVenta, provincias } = usePage().props;
 
-    const { data, setData, post } = useForm({
+    const { data, setData, post, reset } = useForm({
         nombre: '',
         direccion: '',
         provincia: '',
@@ -23,7 +23,7 @@ export default function PuntosVenta() {
     const [searchTerm, setSearchTerm] = useState('');
     const [createView, setCreateView] = useState(false);
     const [subirView, setSubirView] = useState(false);
-    const [archivo, setArchivo] = useState();
+    const [archivo, setArchivo] = useState<File | undefined>();
 
     // Manejadores para la paginación del backend
     const handlePageChange = (page) => {

@@ -8,8 +8,7 @@ use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Inertia\Inertia;
-use Inertia\Response;
+use Illuminate\Validation\ValidationException;
 
 class RegisteredUserController extends Controller
 {
@@ -24,18 +23,18 @@ class RegisteredUserController extends Controller
     /**
      * Handle an incoming registration request.
      *
-     * @throws \Illuminate\Validation\ValidationException
+     * @throws ValidationException
      */
     public function store(Request $request)
     {
 
         $data = $request->validate([
-            'name' => "required|string|max:255",
-            'email' => "sometimes|nullable|string|email|max:255|unique:users,email",
-            'email_dos' => "nullable|sometimes|string|email|max:255",
-            'email_tres' => "nullable|sometimes|string|email|max:255",
-            'email_cuatro' => "nullable|sometimes|string|email|max:255",
-            "password" => "required|confirmed|string|min:8",
+            'name' => 'required|string|max:255',
+            'email' => 'sometimes|nullable|string|email|max:255|unique:users,email',
+            'email_dos' => 'nullable|sometimes|string|email|max:255',
+            'email_tres' => 'nullable|sometimes|string|email|max:255',
+            'email_cuatro' => 'nullable|sometimes|string|email|max:255',
+            'password' => 'required|confirmed|string|min:8',
             'cuit' => 'required|string|max:20',
             'razon_social' => 'nullable|sometimes|string|max:255',
             'direccion' => 'nullable|string|max:255',
@@ -83,5 +82,9 @@ class RegisteredUserController extends Controller
                 ]);
             }
         }
+
+        event(new Registered($user));
+
+        return redirect('/')->with('status', 'Registro recibido. La cuenta quedará disponible cuando sea autorizada.');
     }
 }
