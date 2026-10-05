@@ -61,60 +61,100 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const completedFormKey = 'sanjusto_popup_form_completed_v1';
+            let completedThisVisit = false;
+            let bitrixLoaded = false;
+
+            function getStoredValue(key) {
+                try {
+                    return localStorage.getItem(key);
+                } catch (error) {
+                    return null;
+                }
+            }
+
+            function storeValue(key, value) {
+                try {
+                    localStorage.setItem(key, value);
+                } catch (error) {
+                    // Algunos navegadores bloquean localStorage. La cookie sirve
+                    // de respaldo para recordar un envío confirmado por Bitrix.
+                }
+            }
+
+            function hasCompletedForm() {
+                if (completedThisVisit || getStoredValue(completedFormKey) === 'true') {
+                    return true;
+                }
+
+                try {
+                    return document.cookie.split(';').some(function(cookie) {
+                        return cookie.trim() === completedFormKey + '=true';
+                    });
+                } catch (error) {
+                    return false;
+                }
+            }
+
+            function rememberCompletedForm() {
+                completedThisVisit = true;
+                storeValue(completedFormKey, 'true');
+
+                try {
+                    let cookie = completedFormKey + '=true; Max-Age=31536000; Path=/; SameSite=Lax';
+                    const hostname = window.location.hostname;
+
+                    // Compartir la confirmación entre el dominio con y sin www.
+                    if (hostname === 'sanjustoiluminacion.com.ar' || hostname.endsWith('.sanjustoiluminacion.com.ar')) {
+                        cookie += '; Domain=sanjustoiluminacion.com.ar';
+                    }
+                    if (window.location.protocol === 'https:') {
+                        cookie += '; Secure';
+                    }
+                    document.cookie = cookie;
+                } catch (error) {
+                    // Si las cookies están bloqueadas, queda localStorage como respaldo.
+                }
+            }
 
             function shouldShowDailyForm() {
-                // El popup no vuelve a mostrarse cuando Bitrix24 confirma que esta
-                // persona completó el formulario. El dato queda en este navegador.
-                if (localStorage.getItem(completedFormKey) === 'true') {
+                if (hasCompletedForm()) {
                     return false;
                 }
 
-                const lastVisit = localStorage.getItem('sanjusto_last_visit');
                 const today = new Date().toDateString();
-
-                if (!lastVisit || lastVisit !== today) {
-                    localStorage.setItem('sanjusto_last_visit', today);
-                    return true; 
-                }
-
-                return false;
+                return getStoredValue('sanjusto_last_visit') !== today;
             }
-
 
             function loadBitrixForm() {
                 const formContainer = document.getElementById('formContainer');
 
-                if (!formContainer) {
+                if (!formContainer || bitrixLoaded) {
                     return;
                 }
 
-                // Crear el script del formulario
                 const formScript = document.createElement('script');
                 formScript.setAttribute('data-b24-form', 'inline/8/akv4xt');
                 formScript.setAttribute('data-skip-moving', 'true');
-
-                // Función para cargar el formulario
-                (function(w, d, u) {
-                    var s = d.createElement('script');
-                    s.async = true;
-                    s.src = u + '?' + (Date.now() / 180000 | 0);
-                    var h = d.getElementsByTagName('script')[0];
-                    h.parentNode.insertBefore(s, h);
-                })(window, document, 'https://cdn.bitrix24.es/b7493823/crm/form/loader_8.js');
-
-                // Agregar el script al contenedor del formulario
+                formScript.async = true;
+                formScript.src = 'https://cdn.bitrix24.es/b7493823/crm/form/loader_8.js?' + (Date.now() / 180000 | 0);
                 formContainer.appendChild(formScript);
+                bitrixLoaded = true;
             }
 
             function showModal() {
+                // Otro tab puede haber completado el formulario durante el delay.
+                if (hasCompletedForm()) {
+                    hideModal();
+                    return;
+                }
+
                 const modal = document.getElementById('dailyFormModal');
                 if (!modal) {
                     return;
                 }
 
                 modal.style.display = 'flex';
-
-                // Cargar el formulario de Bitrix24
+                storeValue('sanjusto_last_visit', new Date().toDateString());
                 loadBitrixForm();
             }
 
@@ -127,20 +167,33 @@
                 modal.style.display = 'none';
             }
 
-            function markFormAsCompleted() {
-                localStorage.setItem(completedFormKey, 'true');
+            // Bitrix emite send:success después de confirmar el envío en el CRM.
+            // No marcar por submit/click/cierre: podrían ser envíos fallidos.
+            window.addEventListener('b24:form:send:success', function(event) {
+                const form = event.detail && event.detail.object;
+                const identification = form && form.identification;
+
+                if (!identification || String(identification.id) !== '8' || identification.sec !== 'akv4xt') {
+                    return;
+                }
+
+                rememberCompletedForm();
                 hideModal();
+            });
+
+            function hideCompletedForm() {
+                if (hasCompletedForm()) {
+                    rememberCompletedForm();
+                    hideModal();
+                }
             }
 
-            // Bitrix24 expone la instancia de la CRM form al inicializarla. El
-            // evento "complete" ocurre únicamente cuando el envío fue exitoso.
-            window.addEventListener('b24:form:init', function(event) {
-                const form = event.detail && event.detail.object;
-
-                if (form && typeof form.subscribe === 'function') {
-                    form.subscribe('complete', markFormAsCompleted);
+            window.addEventListener('storage', function(event) {
+                if (event.key === completedFormKey) {
+                    hideCompletedForm();
                 }
-            }, { once: true });
+            });
+            window.addEventListener('pageshow', hideCompletedForm);
 
             // Event listener para cerrar el modal
             const closeFormModal = document.getElementById('closeFormModal');
@@ -159,8 +212,10 @@
                 });
             }
 
-            // Verificar si debe mostrar el formulario
-            if (shouldShowDailyForm()) {
+            // Conservar las confirmaciones guardadas por versiones anteriores.
+            if (hasCompletedForm()) {
+                hideCompletedForm();
+            } else if (shouldShowDailyForm()) {
                 // Mostrar el modal después de un pequeño delay para que la página cargue
                 setTimeout(showModal, 1000);
             }
